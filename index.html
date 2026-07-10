@@ -145,7 +145,7 @@ const MAT = {
 <b>Argument-Baukasten für neue Themen:</b> Geld · Gerechtigkeit · Qualität · Gesundheit/Umwelt · Freiheit · Gesellschaft.`,
   checkliste: `☐ Verb an Position 2 / am Ende nach dass, weil, obwohl?<br>☐ Nach „deshalb/trotzdem/außerdem" sofort das Verb?<br>☐ Adjektivendungen (die steigend<b>en</b> Kosten)?<br>☐ aufgrund/trotz/wegen + <b>Genitiv</b>?<br>☐ Verben mit fester Präposition (abhängen <b>von</b>, führen <b>zu</b>)?<br>☐ Jedes Argument mit Begründung oder Beispiel?<br>☐ Wortwiederholungen ersetzt (wichtig → entscheidend/zentral)?<br>☐ ALLE Aufgabenpunkte behandelt (Grafik? Positionen? Meinung? <b>Heimatland?</b>)?<br>☐ Keine Umgangssprache?`,
   hoeren: `<b>Notizen-Raster:</b> 2 Spalten — links WER (Sprecher), rechts WAS (Kernaussage, Zahl). Abkürzungen: ↑ steigt · ↓ sinkt · D = Deutschland.<br><b>Quellen:</b> <a href="https://learngerman.dw.com/de/langsam-gesprochene-nachrichten/s-42184963" target="_blank">DW Langsame Nachrichten</a> (Einstieg) · Deutschlandfunk „Forschung aktuell" · Terra X (YouTube).<br><b>Regel:</b> Verpasste Antwort sofort loslassen — Kreuz setzen, weiter. Komplette Taktik: ${datei("24")}.`,
-  lesen: `<b>Taktik:</b> Erst die Aufgaben lesen, dann den Text · Zeitbudget pro Leseteil hart deckeln · „Text sagt dazu nichts" = kein Beleg IM TEXT (Weltwissen ist die Falle!) · am Ende nichts leer lassen — Raten kostet nichts.<br><b>Quellen:</b> Zeit · Spiegel · FAZ Wissen — pro Artikel 3 eigene Ja/Nein/„sagt nichts"-Aussagen formulieren. Komplett: ${datei("24")}.`,
+  lesen: `<b>Taktik:</b> Erst die Aufgaben lesen, dann den Text · Zeitbudget pro Leseteil hart deckeln · „Text sagt dazu nichts" = kein Beleg IM TEXT (Weltwissen ist die Falle!) · am Ende nichts leer lassen — Raten kostet nichts.<br><b>Quellen:</b> Zeit · Spiegel · FAZ Wissen — pro Artikel 3 eigene Ja/Nein/„sagt nichts"-Aussagen formulieren. Komplett: ${datei("24")} · alle 12 Übungstexte mit Lösungen: ${datei("25")}.`,
   sprechen7: `<b>Die 7 Aufgaben:</b> 1 Auskunft (Sie) · 2 Heimatland (du) · 3 <b>Grafik</b> (Sie) · 4 <b>Stellungnahme</b> (Sie, 90 Sek. — Königsaufgabe) · 5 Rat geben (du) · 6 <b>Hypothesen</b> (Sie) · 7 Empfehlung (du).<br><b>Aufgabe 4 in 90 Sek.:</b> 1 Satz Einstieg → 1–2 Pro → 1–2 Contra → Meinung mit Grund → 1 Satz Fazit.<br><b>Aufgabe 6:</b> „Ein Grund dafür könnte sein, dass …" · „Wenn sich dieser Trend fortsetzt, dürfte …"<br><b>Regeln:</b> Vorbereitungszeit = 3 Stichworte, NIE ganze Sätze · Register beachten (du/Sie wird bewertet!) · Sprechzeit ausfüllen. Musterantworten: ${datei("16")}.`,
   redemittel: `<b>Auskunft:</b> „Ich rufe an, weil …" · „Könnten Sie mir sagen, ob …?" · „Mich würde außerdem interessieren, …"<br><b>Grafik:</b> „Die Grafik zeigt, wie sich … entwickelt hat." · „Besonders auffällig ist, dass …" · „Zusammenfassend kann man sagen, dass …"<br><b>Stellungnahme:</b> „Einerseits spricht für …, dass … Andererseits darf man nicht übersehen, dass …" · „Ich persönlich bin der Meinung, dass …, und zwar aus folgendem Grund: …" · „Deshalb plädiere ich dafür, …"<br><b>Rat (du):</b> „An deiner Stelle würde ich …" · „Ich würde dir raten, …, weil …"<br><b>Hypothese:</b> „Das lässt sich vermutlich darauf zurückführen, dass …" · „Es ist anzunehmen, dass …"`,
   wortschatz: `<b>So läuft der Slot:</b> 1) Übungsblock unten lösen (10′) · 2) Wortschatz aktiv: 10 neue Wörter/Wendungen als Anki-Karten — immer als ganzer Satz, nie isoliert („die Kluft zwischen Arm und Reich wächst") · 3) Fehlertagebuch: 5 alte Fehler noch einmal richtig schreiben.<br><b>C1-Quellen:</b> Kernsätze-Deck (Fuß der Seite) · Zahlensprache (${datei("15")}) · Synonym-Modul (${datei("22")}).`,
@@ -242,11 +242,40 @@ const UEB = {
     ["„ein großes Problem“ → C1","eine große Herausforderung · ein gravierender Missstand"],
     ["„Die Grafik zeigt einen Trend.“ → C1","verdeutlicht · veranschaulicht · dokumentiert"],
     ["„sehr interessant“ → C1","äußerst · überaus · besonders"]]},
+  9: { n:"Konjunktiv II", items:[
+    ["„Wenn die Gebühren abgeschafft werden, studieren mehr junge Menschen.“ → irreal (Konjunktiv II)","Wenn die Gebühren abgeschafft würden, würden mehr junge Menschen studieren."],
+    ["„Ohne das Auto erreichen viele Pendler ihren Arbeitsplatz nicht.“ → mit „könnten“","Ohne das Auto könnten viele Pendler ihren Arbeitsplatz nicht erreichen."],
+    ["Vorsichtiger Vorschlag: „Die Stadt muss den Nahverkehr ausbauen.“","Die Stadt sollte/müsste den Nahverkehr ausbauen."],
+    ["Prognose (Sprechen 6): „Der Trend setzt sich fort. Der Fleischkonsum sinkt weiter.“ → mit „dürfte“","Wenn sich der Trend fortsetzt, dürfte der Fleischkonsum weiter sinken."],
+    ["„Es ist besser, wenn Kinder später eingeschult werden.“ → Konjunktiv II","Es wäre besser, wenn Kinder später eingeschult würden."],
+    ["Irreale Vergangenheit: „Ich habe das Stipendium nicht beantragt. Das war ein Fehler.“","Ich hätte das Stipendium beantragen sollen."],
+    ["Rat mit „an deiner Stelle“: dein Freund arbeitet 25 Stunden pro Woche neben dem Studium","An deiner Stelle würde ich den Nebenjob reduzieren."],
+    ["Vermutung: „Ein Grund dafür ______ sein, dass die Mieten steigen.“","könnte"]]},
+  10: { n:"Partizipialattribut", items:[
+    ["„die Kosten, die steigen“ → Partizip I","die steigenden Kosten"],
+    ["„die Studiengebühren, die abgeschafft wurden“ → Partizip II","die abgeschafften Studiengebühren"],
+    ["„die im Ausland erbrachten Leistungen“ → Relativsatz","die Leistungen, die im Ausland erbracht wurden"],
+    ["„Menschen, die auf das Auto angewiesen sind“ → Partizipialattribut","die auf das Auto angewiesenen Menschen"],
+    ["„der Anteil, der seit 2010 kontinuierlich wächst“ → Partizip I","der seit 2010 kontinuierlich wachsende Anteil"],
+    ["„eine Entscheidung, die gut begründet ist“ → Partizip II","eine gut begründete Entscheidung"],
+    ["„die von der OECD veröffentlichten Daten“ → Relativsatz","die Daten, die von der OECD veröffentlicht wurden"],
+    ["„ein Problem, das sich verschärft“ → Partizip I","ein sich verschärfendes Problem"]]},
+  11: { n:"Adjektivdeklination", items:[
+    ["„wegen d__ steigend__ Mieten“","wegen der steigenden Mieten"],
+    ["„ein überzeugend__ Argument“ (Nominativ, neutrum)","ein überzeugendes Argument"],
+    ["„mit einem gut ausgebaut__ Nahverkehr“","mit einem gut ausgebauten Nahverkehr"],
+    ["„die Bedeutung lebenslang__ Lernens“","die Bedeutung lebenslangen Lernens"],
+    ["„trotz zahlreich__ Proteste“","trotz zahlreicher Proteste"],
+    ["„in den vergangen__ zehn Jahren“","in den vergangenen zehn Jahren"],
+    ["„junge Menschen aus einkommensschwach__ Familien“","junge Menschen aus einkommensschwachen Familien"],
+    ["„angesichts d__ wachsend__ Nachfrage“","angesichts der wachsenden Nachfrage"]]},
 };
-const UEB_WOCHE = { 1:[2,6], 2:[3,5], 3:[4,5], 4:[1,7] };  // ab W5: alle Module rotierend
+// Zuordnung passend zu den Grammatik-Schwerpunkten der Wochen 1–4 (P1_GRAMMATIK):
+// W1 Konnektoren+Präpositionen · W2 Passiv+Nominalstil · W3 Konjunktiv I+II · W4 Partizip/Relativ/Adjektiv
+const UEB_WOCHE = { 1:[2,6], 2:[3,1], 3:[4,9], 4:[10,11] };  // ab W5: alle Module rotierend
 
 function uebungsblock(w, d) {
-  const module_ = UEB_WOCHE[w] || [1,2,3,4,5,6,7,8];
+  const module_ = UEB_WOCHE[w] || [1,2,3,4,5,6,7,8,9,10,11];
   const listen = module_.map(m => UEB[m].items.map(it => [UEB[m].n, it[0], it[1]]));
   const pool = [];
   for (let j = 0; j < Math.max(...listen.map(l => l.length)); j++)
@@ -257,6 +286,183 @@ function uebungsblock(w, d) {
   for (let i = 0; i < n; i++) aufgaben.push(pool[(dayIdx*n + i) % pool.length]);
   return aufgaben.map(([mod, a, l]) => `<details class="ueb"><summary><span class="mod">${mod}:</span> ${a}</summary>
     <div class="loes">✅ ${l}</div></details>`).join("");
+}
+
+// ── Lesetraining: eigene Übungstexte im Stil von Leseverstehen Teil 3 ────
+// Jeden Freitag ein Text der Woche: erst die Aussagen lesen, dann den Text,
+// dann pro Aussage entscheiden: Ja · Nein · Text sagt dazu nichts. (Datei 25)
+const LESEN = [
+  { t:"Studiengebühren", txt:`Seit der Wiedereinführung moderater Studienbeiträge in einigen Bundesländern ist die Debatte um die Finanzierung der Hochschulen neu entbrannt. Befürworter verweisen darauf, dass die Universitäten chronisch unterfinanziert seien und zusätzliche Einnahmen unmittelbar der Qualität der Lehre zugutekämen: kleinere Seminare, modernere Bibliotheken, mehr Tutorien. Kritiker halten dagegen, dass bereits Beiträge von 500 Euro pro Semester junge Menschen aus einkommensschwachen Familien abschrecken. Eine Untersuchung des Deutschen Studentenwerks kommt zu dem Ergebnis, dass die Studierneigung in dieser Gruppe nach Einführung von Gebühren messbar zurückging, während sie bei Kindern aus Akademikerfamilien nahezu unverändert blieb. Bemerkenswert ist zudem, dass die befürchtete Abwanderung in gebührenfreie Bundesländer weitgehend ausblieb: Die meisten Studierenden wählten ihren Studienort weiterhin nach Fach und Nähe zum Heimatort. Ob Gebühren sozial abgefedert werden können — etwa durch Stipendien oder nachgelagerte Zahlung —, bleibt der zentrale Streitpunkt.`, f:[
+    [`Befürworter erwarten, dass zusätzliche Einnahmen der Qualität der Lehre zugutekommen.`,`Ja`,`„… unmittelbar der Qualität der Lehre zugutekämen“`],
+    [`Nach Einführung von Gebühren sank die Studierneigung in allen sozialen Gruppen gleich stark.`,`Nein`,`bei Akademikerkindern blieb sie „nahezu unverändert“`],
+    [`Viele Studierende wichen wegen der Gebühren in gebührenfreie Bundesländer aus.`,`Nein`,`die Abwanderung „blieb weitgehend aus“`],
+    [`Nachgelagerte Studiengebühren sind in Deutschland bereits flächendeckend eingeführt.`,`Text sagt dazu nichts`,`nachgelagerte Zahlung wird nur als möglicher Streitpunkt erwähnt`],
+    [`Die Studienortwahl richtete sich vor allem nach Fach und Nähe zum Heimatort.`,`Ja`,`letzter Teil des Textes`]]},
+  { t:"Online-Studium vs. Präsenz", txt:`Nach dem Ende der Pandemie haben die meisten Hochschulen ihre Lehre wieder auf Präsenz umgestellt — doch ein erheblicher Teil der digitalen Formate ist geblieben. Aufgezeichnete Vorlesungen, hybride Seminare und Online-Sprechstunden gehören vielerorts zum Standard. Studierendenvertreter begrüßen die Flexibilität: Wer nebenbei arbeitet oder Angehörige pflegt, könne sein Studium besser organisieren. Hochschuldidaktiker warnen jedoch vor einer schleichenden Entwertung des Campuslebens. Die Abbrecherquote in reinen Online-Studiengängen liegt Erhebungen zufolge deutlich über der von Präsenzstudiengängen, was vor allem auf fehlende soziale Bindung zurückgeführt wird. Interessant ist ein Befund aus Skandinavien: Dort schnitten Studierende in hybriden Modellen bei Prüfungen besser ab als beide Vergleichsgruppen — allerdings nur, wenn die Online-Anteile didaktisch eigens aufbereitet waren. Bloß abgefilmte Vorlesungen zeigten keinen Effekt. Die Debatte dreht sich daher zunehmend nicht mehr um das Ob, sondern um das Wie der Digitalisierung.`, f:[
+    [`Die Hochschulen haben nach der Pandemie alle digitalen Formate wieder abgeschafft.`,`Nein`,`„ein erheblicher Teil der digitalen Formate ist geblieben“`],
+    [`Die Abbrecherquote in reinen Online-Studiengängen ist höher als im Präsenzstudium.`,`Ja`,`„deutlich über der von Präsenzstudiengängen“`],
+    [`Schon einfache Vorlesungsaufzeichnungen verbesserten in Skandinavien die Prüfungsergebnisse.`,`Nein`,`„Bloß abgefilmte Vorlesungen zeigten keinen Effekt“`],
+    [`Die Mehrheit der Studierenden wünscht sich ein reines Online-Studium.`,`Text sagt dazu nichts`,`über eine solche Mehrheit steht nichts im Text`],
+    [`Hybride Modelle können unter bestimmten Bedingungen zu besseren Prüfungsleistungen führen.`,`Ja`,`Befund aus Skandinavien — bei didaktischer Aufbereitung`]]},
+  { t:"Auslandsstudium", txt:`Die Zahl der deutschen Studierenden, die einen Teil ihres Studiums im Ausland verbringen, hat sich innerhalb von zwanzig Jahren nahezu verdoppelt. Arbeitgeberverbände werten Auslandserfahrung als Beleg für Selbstständigkeit und interkulturelle Kompetenz; in Umfragen geben Personalverantwortliche allerdings an, dass die fachliche Passung bei der Einstellung letztlich schwerer wiege. Für die Studierenden selbst steht häufig der Spracherwerb im Vordergrund: Wer ein Jahr im Ausland verbringt, erreicht Studien zufolge im Schnitt ein deutlich höheres Sprachniveau als Lernende im Heimatland. Problematisch bleibt die Anerkennung von Prüfungsleistungen: Rund ein Drittel der Rückkehrer berichtet, dass im Ausland erbrachte Leistungen nur teilweise angerechnet wurden, was das Studium verlängert. Zudem hängt die Mobilität stark vom Elternhaus ab: Kinder aus Akademikerfamilien gehen mehr als doppelt so häufig ins Ausland. Stipendienprogramme wie Erasmus+ sollen diese Lücke schließen, erreichen bislang aber nur einen Teil der Zielgruppe.`, f:[
+    [`Die Zahl der Auslandsstudierenden hat sich in zwanzig Jahren fast verdoppelt.`,`Ja`,`erster Satz`],
+    [`Für Personalverantwortliche ist Auslandserfahrung das wichtigste Einstellungskriterium.`,`Nein`,`die fachliche Passung wiegt „letztlich schwerer“`],
+    [`Etwa ein Drittel der Rückkehrer berichtet von Problemen bei der Anerkennung.`,`Ja`,`„Rund ein Drittel … nur teilweise angerechnet“`],
+    [`Das Budget von Erasmus+ wurde zuletzt erhöht.`,`Text sagt dazu nichts`,`über das Budget steht nichts im Text`],
+    [`Die soziale Herkunft hat keinen Einfluss auf die Auslandsmobilität.`,`Nein`,`Akademikerkinder gehen „mehr als doppelt so häufig“`]]},
+  { t:"Autofreie Innenstädte", txt:`Immer mehr europäische Städte sperren ihre Zentren ganz oder teilweise für den privaten Autoverkehr. Die Erfahrungen sind ermutigender, als viele erwartet hatten: In mehreren Städten stieg die Aufenthaltsqualität messbar, die Stickoxidwerte sanken, und der von Händlern befürchtete Umsatzeinbruch blieb überwiegend aus — in einzelnen Einkaufsstraßen legte der Umsatz sogar zu, weil Fußgänger häufiger und länger verweilen als Autofahrer. Gleichwohl ist der Widerstand erheblich. Pendler aus dem Umland, Handwerksbetriebe und Lieferdienste verweisen darauf, dass sie auf die Zufahrt angewiesen sind; zu großzügige Ausnahmegenehmigungen führen jedoch schnell dazu, dass die Regel ausgehöhlt wird. Verkehrsforscher betonen deshalb, autofreie Zonen funktionierten nur als Teil eines Gesamtkonzepts: dichter Takt im Nahverkehr, Park-and-ride-Angebote am Stadtrand und sichere Radwege. Wo dieses Umfeld fehle, verlagere sich der Verkehr lediglich in die angrenzenden Wohnviertel — und die Akzeptanz kippe.`, f:[
+    [`In allen Städten brach der Umsatz des Einzelhandels nach der Sperrung ein.`,`Nein`,`der Einbruch „blieb überwiegend aus“, teils Zuwachs`],
+    [`Fußgänger halten sich häufiger und länger in Einkaufsstraßen auf als Autofahrer.`,`Ja`,`Begründung für den Umsatzzuwachs`],
+    [`Verkehrsforscher halten autofreie Zonen nur im Rahmen eines Gesamtkonzepts für sinnvoll.`,`Ja`,`Nahverkehr, Park-and-ride, Radwege`],
+    [`Die Zahl der Verkehrsunfälle in den Zentren ist gesunken.`,`Text sagt dazu nichts`,`Unfälle werden nicht erwähnt`],
+    [`Handwerksbetriebe begrüßen die autofreien Zonen ausdrücklich.`,`Nein`,`sie gehören zum Widerstand`]]},
+  { t:"Frauenquote", txt:`Seit Einführung der Geschlechterquote für Aufsichtsräte großer börsennotierter Unternehmen ist der Frauenanteil in diesen Gremien deutlich gestiegen — von gut zehn auf über dreißig Prozent. In den Vorständen, für die lange keine verbindliche Vorgabe galt, verlief die Entwicklung dagegen schleppend. Befürworter sehen darin den Beleg, dass freiwillige Selbstverpflichtungen wirkungslos bleiben und nur gesetzlicher Druck die gläserne Decke durchbricht. Gegner wenden ein, eine Quote stelle die Qualifikation infrage und stemple erfolgreiche Frauen als „Quotenfrauen“ ab. Interessanterweise berichten Studien aus Norwegen, dem Pionierland der Quote, weder von den befürchteten Leistungseinbrüchen der Unternehmen noch von einem automatischen Kulturwandel: Der Frauenanteil unterhalb der Spitzengremien veränderte sich kaum. Forscherinnen folgern daraus, dass Quoten zwar Türen öffnen, aber flankierende Maßnahmen brauchen — etwa planbare Karrierewege, Führung in Teilzeit und eine faire Verteilung der Familienarbeit.`, f:[
+    [`Der Frauenanteil in den Aufsichtsräten hat sich seit der Quote mehr als verdoppelt.`,`Ja`,`von gut zehn auf über dreißig Prozent`],
+    [`In Norwegen führte die Quote zu messbaren Leistungseinbrüchen der Unternehmen.`,`Nein`,`Studien berichten „weder von … Leistungseinbrüchen …“`],
+    [`Die Quote veränderte in Norwegen auch die Ebenen unterhalb der Spitzengremien deutlich.`,`Nein`,`der Anteil dort „veränderte sich kaum“`],
+    [`Die Mehrheit der Bevölkerung befürwortet die Quote.`,`Text sagt dazu nichts`,`Umfragen zur Bevölkerung kommen nicht vor`],
+    [`Forscherinnen halten neben der Quote weitere Maßnahmen für nötig.`,`Ja`,`„flankierende Maßnahmen“ — letzter Satz`]]},
+  { t:"Wohnen bei den Eltern", txt:`Junge Erwachsene in Deutschland verlassen das Elternhaus heute später als noch vor zwanzig Jahren: Mehr als ein Viertel der 25-Jährigen wohnt weiterhin bei den Eltern, unter Männern ist der Anteil deutlich höher als unter Frauen. Als Hauptgrund gelten die stark gestiegenen Mieten in den Universitätsstädten; hinzu kommen längere Ausbildungszeiten und der spätere Berufseinstieg. Im europäischen Vergleich liegt Deutschland damit gleichwohl im Mittelfeld: In Südeuropa bleibt über die Hälfte der unter 30-Jährigen im Elternhaus, in Skandinavien zieht die Mehrheit schon mit Anfang zwanzig aus — dort allerdings großzügig unterstützt durch staatliche Wohnbeihilfen. Entwicklungspsychologen warnen davor, das Wohnen bei den Eltern vorschnell als verlängerte Kindheit zu deuten: Entscheidend sei nicht die Adresse, sondern ob junge Erwachsene eigene Verantwortung übernehmen — finanziell, im Haushalt und bei Lebensentscheidungen. Eine Wohngemeinschaft könne Selbstständigkeit fördern, das Kinderzimmer sie verhindern — zwingend sei beides nicht.`, f:[
+    [`Unter den 25-jährigen Männern wohnen mehr bei den Eltern als unter den Frauen.`,`Ja`,`„unter Männern ist der Anteil deutlich höher“`],
+    [`Junge Menschen in Skandinavien ziehen früh aus, weil die Mieten dort besonders niedrig sind.`,`Nein`,`der Grund im Text sind staatliche Wohnbeihilfen`],
+    [`Deutschland hat im europäischen Vergleich den höchsten Anteil junger Erwachsener im Elternhaus.`,`Nein`,`Deutschland liegt „im Mittelfeld“`],
+    [`Psychologen halten den Wohnort für weniger entscheidend als die Übernahme von Verantwortung.`,`Ja`,`„Entscheidend sei nicht die Adresse …“`],
+    [`Die Zahl der Wohngemeinschaften ist in den letzten Jahren gestiegen.`,`Text sagt dazu nichts`,`darüber steht nichts im Text`]]},
+  { t:"Englisch als Unterrichtssprache", txt:`Inzwischen wird mehr als jeder zehnte Masterstudiengang in Deutschland vollständig auf Englisch unterrichtet; in einigen Fächern wie Informatik oder Wirtschaft ist es fast die Hälfte. Die Hochschulen versprechen sich davon internationale Sichtbarkeit und qualifizierte Bewerber aus dem Ausland — mit Erfolg: Der Anteil internationaler Studierender in diesen Programmen ist überdurchschnittlich hoch. Sprachwissenschaftler beobachten die Entwicklung dennoch mit Sorge. Wenn weder Lehrende noch Studierende in ihrer Muttersprache arbeiten, verflachten Diskussionen messbar, und Prüfungsleistungen fielen schwächer aus. Zudem drohe das Deutsche als Wissenschaftssprache zu verarmen, wenn neue Fachbegriffe nur noch auf Englisch entstünden. Befürworter entgegnen, die Wissenschaft sei ohnehin international, und wer publizieren wolle, komme am Englischen nicht vorbei. Einen Mittelweg gehen Hochschulen, die englischsprachige Programme mit verpflichtenden Deutschkursen kombinieren — auch, damit internationale Absolventen anschließend dem deutschen Arbeitsmarkt zur Verfügung stehen.`, f:[
+    [`In manchen Fächern ist fast die Hälfte der Masterstudiengänge englischsprachig.`,`Ja`,`Informatik, Wirtschaft — erster Satz`],
+    [`Laut Sprachwissenschaftlern fallen Prüfungsleistungen in fremdsprachigen Programmen besser aus.`,`Nein`,`sie „fielen schwächer aus“`],
+    [`Verpflichtende Deutschkurse sollen internationale Absolventen auf den deutschen Arbeitsmarkt vorbereiten.`,`Ja`,`letzter Satz`],
+    [`Die meisten internationalen Studierenden bleiben nach dem Abschluss in Deutschland.`,`Text sagt dazu nichts`,`über den Verbleib steht nichts im Text`],
+    [`Im Bachelor ist der Anteil englischsprachiger Programme genauso hoch wie im Master.`,`Text sagt dazu nichts`,`der Text spricht nur vom Master`]]},
+  { t:"Nebenjob im Studium", txt:`Rund zwei Drittel der Studierenden in Deutschland arbeiten neben dem Studium — so viele wie nie zuvor. Für die Mehrheit ist der Job keine freie Entscheidung: Steigende Mieten und Lebenshaltungskosten machen ihn zur Notwendigkeit, zumal die staatliche Förderung immer weniger junge Menschen erreicht. Die Forschung zeichnet ein differenziertes Bild der Folgen. Bis zu einem Umfang von etwa fünfzehn Wochenstunden bleiben die Studienleistungen weitgehend stabil; wer mehr arbeitet, braucht im Schnitt länger bis zum Abschluss und erzielt schlechtere Noten. Entscheidend ist außerdem die Art der Tätigkeit: Fachnahe Jobs — etwa als studentische Hilfskraft oder Werkstudent — erleichtern nachweislich den Berufseinstieg und werden von Arbeitgebern als Berufserfahrung gewertet. Fachfremde Aushilfstätigkeiten bringen dagegen kaum Vorteile für die spätere Karriere, auch wenn sie Schlüsselkompetenzen wie Zuverlässigkeit und Zeitmanagement fördern können. Studierendenvertreter fordern deshalb, die Förderung so auszubauen, dass Arbeiten wieder eine Wahl wird.`, f:[
+    [`Die Mehrheit der jobbenden Studierenden arbeitet aus freien Stücken.`,`Nein`,`der Job ist „keine freie Entscheidung“, sondern Notwendigkeit`],
+    [`Bis etwa fünfzehn Wochenstunden bleiben die Studienleistungen weitgehend stabil.`,`Ja`,`Mitte des Textes`],
+    [`Fachfremde Aushilfsjobs nützen der Karriere genauso wie fachnahe Tätigkeiten.`,`Nein`,`sie bringen „kaum Vorteile für die spätere Karriere“`],
+    [`Werkstudententätigkeiten werden von Arbeitgebern als Berufserfahrung gewertet.`,`Ja`,`„nachweislich … als Berufserfahrung gewertet“`],
+    [`Die Abbruchquote unter jobbenden Studierenden ist gestiegen.`,`Text sagt dazu nichts`,`Abbruchquoten kommen im Text nicht vor`]]},
+  { t:"Homeoffice", txt:`Fünf Jahre nach der Pandemie hat sich das Homeoffice in Deutschland auf hohem Niveau eingependelt: Etwa ein Viertel der Beschäftigten arbeitet regelmäßig von zu Hause, in wissensintensiven Branchen ist es mehr als die Hälfte. Die Produktivitätsforschung kommt zu differenzierten Ergebnissen: Konzentrierte Einzelarbeit gelingt zu Hause häufig besser, während kreative Teamaufgaben und die Einarbeitung neuer Kolleginnen und Kollegen unter der Distanz leiden. Einige Konzerne haben ihre Beschäftigten deshalb zu mehreren Präsenztagen pro Woche verpflichtet — meist gegen erheblichen Widerstand der Belegschaft. Unternehmen wiederum nutzen die Entwicklung, um Büroflächen zu verkleinern und Kosten zu sparen. Bemerkenswert ist der Befund zu jungen Beschäftigten: Gerade Berufseinsteiger, die technisch am selbstverständlichsten mit digitaler Arbeit umgehen, vermissen im Homeoffice am stärksten Netzwerke, Vorbilder und informelles Lernen. Hybride Modelle mit festen gemeinsamen Bürotagen gelten derzeit als tragfähigster Kompromiss.`, f:[
+    [`In wissensintensiven Branchen arbeitet über die Hälfte der Beschäftigten regelmäßig im Homeoffice.`,`Ja`,`erster Satz`],
+    [`Kreative Teamaufgaben gelingen im Homeoffice besser als im Büro.`,`Nein`,`sie „leiden unter der Distanz“`],
+    [`Die Beschäftigten begrüßten die Rückkehrpflicht in die Büros überwiegend.`,`Nein`,`„meist gegen erheblichen Widerstand“`],
+    [`Das Homeoffice hat die Zahl der Pendler deutlich reduziert.`,`Text sagt dazu nichts`,`Pendlerzahlen werden nicht erwähnt`],
+    [`Berufseinsteiger vermissen im Homeoffice vor allem Netzwerke und informelles Lernen.`,`Ja`,`„Bemerkenswert ist der Befund zu jungen Beschäftigten“`]]},
+  { t:"Fachkräftemangel & Rente", txt:`Mit dem Renteneintritt der geburtenstarken Jahrgänge verliert der deutsche Arbeitsmarkt bis 2035 mehrere Millionen Arbeitskräfte — deutlich mehr, als junge Menschen nachrücken. Schon heute bleiben Stellen in Pflege, Handwerk und IT monatelang unbesetzt. Zugleich verschiebt sich das Verhältnis von Beitragszahlern zu Rentnern: Kamen in den 1990er-Jahren noch vier Erwerbstätige auf einen Rentner, sind es bald nur noch zwei. Ökonomen sind sich einig, dass keine einzelne Maßnahme das Problem löst. Diskutiert wird ein Bündel: eine höhere Erwerbsbeteiligung von Frauen durch bessere Kinderbetreuung, qualifizierte Zuwanderung, Automatisierung sowie längeres Arbeiten für diejenigen, die es können und wollen. Besonders umstritten ist der letzte Punkt: Während Arbeitgeberverbände ein späteres Renteneintrittsalter fordern, verweisen Gewerkschaften auf körperlich belastende Berufe, in denen viele schon heute den Ruhestand nicht gesund erreichen. Einig ist man sich nur darin, dass Nichtstun die teuerste Option wäre.`, f:[
+    [`Bald kommen auf einen Rentner nur noch etwa zwei Erwerbstätige.`,`Ja`,`Vergleich mit den 1990er-Jahren`],
+    [`Ökonomen halten eine einzige gezielte Maßnahme für ausreichend.`,`Nein`,`„keine einzelne Maßnahme löst das Problem“`],
+    [`Gewerkschaften unterstützen ein höheres Renteneintrittsalter für alle Berufe.`,`Nein`,`sie verweisen auf körperlich belastende Berufe`],
+    [`Die Löhne in der Pflege sind zuletzt gestiegen.`,`Text sagt dazu nichts`,`Löhne werden nicht erwähnt`],
+    [`Bessere Kinderbetreuung soll die Erwerbsbeteiligung von Frauen erhöhen.`,`Ja`,`Teil des diskutierten Maßnahmenbündels`]]},
+  { t:"Organspende", txt:`Obwohl in Umfragen mehr als achtzig Prozent der Deutschen der Organspende positiv gegenüberstehen, besitzt nur gut ein Drittel einen Organspendeausweis — und die Zahl der tatsächlichen Spender gehört zu den niedrigsten in Europa. Der Bundestag hat die Einführung der Widerspruchslösung, bei der jeder als Spender gilt, der nicht ausdrücklich widerspricht, mehrfach abgelehnt; es blieb bei der Zustimmungslösung mit regelmäßiger Befragung, etwa beim Abholen des Ausweises. Der Blick ins Ausland relativiert die Debatte allerdings: Spanien, seit Jahren Spitzenreiter bei den Spenderzahlen, führt seinen Erfolg weniger auf die dort geltende Widerspruchslösung zurück als auf die Organisation in den Kliniken — speziell geschulte Transplantationsbeauftragte sprechen Angehörige früh und professionell an. Fachleute fordern deshalb, neben der Rechtslage vor allem die Abläufe in deutschen Krankenhäusern zu verbessern und das Gespräch mit den Familien nicht dem Zufall zu überlassen.`, f:[
+    [`Die Mehrheit der Deutschen lehnt die Organspende grundsätzlich ab.`,`Nein`,`über achtzig Prozent stehen ihr positiv gegenüber`],
+    [`In Deutschland gilt derzeit die Widerspruchslösung.`,`Nein`,`der Bundestag hat sie mehrfach abgelehnt`],
+    [`Spanien erklärt seinen Erfolg vor allem mit geschulten Transplantationsbeauftragten.`,`Ja`,`„weniger auf die … Widerspruchslösung … als auf die Organisation“`],
+    [`Fachleute sehen Verbesserungsbedarf bei den Abläufen in deutschen Krankenhäusern.`,`Ja`,`letzter Satz`],
+    [`Die Wartezeit auf eine Spenderniere beträgt in Deutschland mehrere Jahre.`,`Text sagt dazu nichts`,`Wartezeiten werden nicht genannt`]]},
+  { t:"E-Mobilität", txt:`Der Anteil der Elektroautos an den Neuzulassungen ist in Deutschland binnen weniger Jahre von unter zwei auf über zwanzig Prozent gestiegen — allerdings nicht kontinuierlich: Nach dem Auslaufen der staatlichen Kaufprämie brachen die Zulassungszahlen zeitweise deutlich ein, was zeigt, wie stark der Markt an Förderungen hängt. Über die Klimabilanz wird weiter gestritten. Zwar verursacht die Batterieproduktion erhebliche Emissionen, doch über den gesamten Lebenszyklus schneidet ein E-Auto Studien zufolge klar besser ab als ein Verbrenner — umso deutlicher, je höher der Anteil erneuerbarer Energien am Strommix ist. Das größte praktische Hindernis bleibt die Ladeinfrastruktur: In Großstädten wächst das Netz zügig, auf dem Land und für Mieter ohne eigenen Stellplatz ist das Laden dagegen oft umständlich und teuer. Verkehrsforscher warnen zudem davor, die Verkehrswende auf den Antriebswechsel zu verkürzen: Ein E-Auto im Stau bleibe ein Auto im Stau.`, f:[
+    [`Die Zulassungszahlen stiegen auch nach dem Ende der Kaufprämie ununterbrochen weiter.`,`Nein`,`sie „brachen zeitweise deutlich ein“`],
+    [`Über den gesamten Lebenszyklus ist die Klimabilanz des E-Autos besser als die des Verbrenners.`,`Ja`,`„schneidet … klar besser ab“`],
+    [`Je höher der Anteil erneuerbarer Energien, desto größer der Klimavorteil des E-Autos.`,`Ja`,`„umso deutlicher, je höher …“`],
+    [`Die Reichweite moderner E-Autos übertrifft inzwischen die von Verbrennern.`,`Text sagt dazu nichts`,`Reichweite kommt im Text nicht vor`],
+    [`Verkehrsforscher sehen im Antriebswechsel allein noch keine Verkehrswende.`,`Ja`,`„Ein E-Auto im Stau bleibe ein Auto im Stau“`]]},
+];
+
+function lesetext(w) {
+  const idx = w <= 4 ? 7 + w : w <= 12 ? w - 5 : (w - 13) % LESEN.length;
+  const l = LESEN[idx];
+  const fragen = l.f.map(([a, u, b]) => `<details class="ueb"><summary>${a}</summary>
+    <div class="loes">✅ ${u} — ${b}</div></details>`).join("");
+  return `<b>📖 Übungstext der Woche: „${l.t}“</b> — wie in der Prüfung: <b>erst</b> die 5 Aussagen unten lesen,
+    <b>dann</b> den Text, dann pro Aussage entscheiden: <b>Ja · Nein · Text sagt dazu nichts</b>. Antippen = Lösung.
+    <div style="margin:8px 0; padding:8px 12px; border-left:3px solid var(--blau); font-style:italic;">${l.txt}</div>
+    ${fragen}<hr style="border:none; border-top:1px solid var(--rand); margin:10px 0;">`;
+}
+
+// ── Reproduktions-Trainer (Samstag): kompletter Text hinter Stichworten ──
+// W1–4: Musteraufsatz nach der Schablone · W5–12: die 6 Kernsätze der Woche.
+// Stichwort antippen = Satz aufdecken · „Zeige den ganzen Text“ = alles.
+const REPRO = {
+  1: { t:"Tempolimit auf Autobahnen", s:[
+    ["Einleitung: kontrovers","Ob auf deutschen Autobahnen ein generelles Tempolimit eingeführt werden sollte, wird seit Langem kontrovers diskutiert."],
+    ["Einleitung: Vorgehen","Im Folgenden werde ich zunächst die Grafik beschreiben, anschließend Argumente abwägen und abschließend meine Position darlegen."],
+    ["Grafik: Thema & Quelle","Die vorliegende Grafik informiert über die Zustimmung zu einem Tempolimit; die Daten stammen vom ADAC und beziehen sich auf die Jahre 2010 bis 2024."],
+    ["Grafik: Trend","Auffällig ist, dass der Anteil der Befürworter in diesem Zeitraum von rund einem Drittel auf über die Hälfte gestiegen ist."],
+    ["Pro 1: Sicherheit","Die Befürworter führen ins Feld, dass ein Tempolimit die Zahl schwerer Unfälle deutlich senken würde."],
+    ["Pro 2: Klima, kostenlos","Darüber hinaus wird angeführt, dass eine niedrigere Geschwindigkeit den CO₂-Ausstoß verringere — und das ohne jegliche Kosten."],
+    ["Contra 1: Freiheit","Die Gegner wenden dagegen ein, dass ein Limit die persönliche Freiheit der Autofahrer unnötig einschränke."],
+    ["Contra 2: Wirkung gering","Kritiker befürchten zudem, der Effekt sei gering, da auf vielen Strecken ohnehin Beschränkungen gälten."],
+    ["Meinung: ausschlaggebend","Ausschlaggebend ist für mich das Argument, dass bereits eine kleine Zahl vermiedener Unfälle Menschenleben rettet."],
+    ["Meinung: einräumen","Allerdings sollte man einräumen, dass ein Tempolimit allein die Verkehrsprobleme nicht löst."],
+    ["Heimatland","In meinem Heimatland gilt auf Autobahnen seit Jahrzehnten ein Tempolimit, und kaum jemand stellt es infrage."],
+    ["Schluss: Plädoyer","Zusammenfassend lässt sich festhalten, dass die Vorteile eines Tempolimits die Nachteile überwiegen; deshalb plädiere ich für seine Einführung."]]},
+  2: { t:"Pflichtjahr für junge Menschen", s:[
+    ["Einleitung: kontrovers","Ob junge Menschen nach der Schule ein verpflichtendes soziales Jahr absolvieren sollten, wird seit Langem kontrovers diskutiert."],
+    ["Einleitung: Vorgehen","Im Folgenden beschreibe ich zunächst die Grafik, wäge dann die Argumente ab und lege abschließend meine Position dar."],
+    ["Grafik: Thema & Quelle","Die vorliegende Grafik informiert über die Einstellung der Bevölkerung zu einem Pflichtjahr; die Angaben erfolgen in Prozent und stammen aus einer Umfrage von 2024."],
+    ["Grafik: Vergleich Alt/Jung","Auffällig ist, dass die Zustimmung bei den über 50-Jährigen mit gut zwei Dritteln fast doppelt so hoch liegt wie bei den unter 30-Jährigen."],
+    ["Pro 1: Zusammenhalt","Die Befürworter führen ins Feld, dass ein Pflichtjahr den gesellschaftlichen Zusammenhalt stärke, weil junge Menschen Lebenswelten kennenlernten, die ihnen sonst verschlossen blieben."],
+    ["Pro 2: Orientierung","Darüber hinaus wird angeführt, dass das Jahr bei der Berufsorientierung helfe und die sozialen Berufe entlaste."],
+    ["Contra 1: Eingriff","Die Gegner wenden dagegen ein, dass ein Zwangsdienst tief in die Lebensplanung junger Menschen eingreife."],
+    ["Contra 2: Qualität","Kritiker befürchten außerdem, unmotivierte Pflichtkräfte könnten die Qualität der Betreuung eher verschlechtern als verbessern."],
+    ["Meinung: Freiwilligkeit","Ausschlaggebend ist für mich das Argument, dass Engagement seinen Wert gerade aus der Freiwilligkeit bezieht."],
+    ["Meinung: einräumen","Allerdings sollte man einräumen, dass attraktive freiwillige Programme bislang nur einen kleinen Teil der Jugendlichen erreichen."],
+    ["Heimatland","In meinem Heimatland gibt es kein Pflichtjahr; stattdessen werden Freiwilligendienste mit Stipendien und Anrechnungspunkten gefördert."],
+    ["Schluss: Alternative","Zusammenfassend plädiere ich dafür, die Freiwilligendienste auszubauen, statt einen Zwang einzuführen."]]},
+  3: { t:"Großstadt oder Land?", s:[
+    ["Einleitung: Frage","Ob das Leben in der Großstadt oder auf dem Land erstrebenswerter ist, wird gerade unter jungen Menschen seit Langem diskutiert."],
+    ["Einleitung: Vorgehen","Zunächst werde ich die Grafik beschreiben, anschließend die Argumente beider Seiten abwägen und abschließend meine eigene Position begründen."],
+    ["Grafik: Thema & Quelle","Die vorliegende Grafik zeigt die Wanderungsbewegungen zwischen Stadt und Land; die Daten stammen vom Statistischen Bundesamt und beziehen sich auf die Jahre 2000 bis 2024."],
+    ["Grafik: junge vs. Familien","Besonders auffällig ist, dass junge Erwachsene weiterhin in die Städte ziehen, während Familien zunehmend das Umland bevorzugen."],
+    ["Pro Stadt 1: Chancen","Für die Stadt spricht, dass Universitäten, Arbeitsplätze und kulturelle Angebote dort konzentriert sind."],
+    ["Pro Stadt 2: ohne Auto","Darüber hinaus wird angeführt, dass man in der Stadt auf ein eigenes Auto verzichten kann."],
+    ["Contra 1: Mieten","Dagegen wird eingewendet, dass die hohen Mieten das Stadtleben für viele unbezahlbar machen."],
+    ["Contra 2: Lärm & Enge","Kritiker verweisen zudem auf Lärm, Enge und Anonymität, die auf Dauer die Lebensqualität mindern."],
+    ["Meinung: Lebensphase","Ausschlaggebend ist für mich, dass die Entscheidung von der Lebensphase abhängt: Was dem Studenten nützt, kann die Familie belasten."],
+    ["Meinung: einräumen","Allerdings sollte man einräumen, dass Homeoffice und schnelles Internet diesen Gegensatz zunehmend abschwächen."],
+    ["Heimatland","In meinem Heimatland ist die Landflucht noch ausgeprägter, weil Arbeitsplätze außerhalb der Hauptstadt fehlen."],
+    ["Schluss: Politik","Zusammenfassend lässt sich festhalten, dass beide Lebensformen ihre Berechtigung haben; entscheidend ist, dass die Politik gleichwertige Lebensverhältnisse schafft."]]},
+  4: { t:"Höhere Steuer auf Fleisch?", s:[
+    ["Einleitung: kontrovers","Ob Fleisch höher besteuert werden sollte, um Klima und Gesundheit zu schützen, wird seit einigen Jahren kontrovers diskutiert."],
+    ["Einleitung: Vorgehen","Zunächst werde ich die Grafik beschreiben, anschließend zentrale Argumente abwägen und abschließend meine eigene Position darlegen."],
+    ["Grafik: Thema & Quelle","Die vorliegende Grafik informiert über den Fleischkonsum pro Kopf in Deutschland; die Daten stammen vom Landwirtschaftsministerium und umfassen die Jahre 1990 bis 2024."],
+    ["Grafik: Rückgang + Zahlen","Auffällig ist der kontinuierliche Rückgang: Der Verbrauch sank von rund 64 auf gut 50 Kilogramm pro Kopf und Jahr."],
+    ["Pro 1: Umweltkosten","Die Befürworter führen ins Feld, dass die Tierhaltung erheblich zum Ausstoß von Treibhausgasen beiträgt und ein höherer Preis den Konsum weiter senken würde."],
+    ["Pro 2: Tierwohl finanzieren","Darüber hinaus wird angeführt, dass die Mehreinnahmen den Umbau zu einer artgerechteren Haltung finanzieren könnten."],
+    ["Contra 1: sozial ungerecht","Die Gegner wenden dagegen ein, dass eine solche Steuer einkommensschwache Haushalte überproportional belaste."],
+    ["Contra 2: Bevormundung","Kritiker befürchten zudem eine Bevormundung der Verbraucher, die selbst entscheiden sollten, was auf den Teller kommt."],
+    ["Meinung: wahre Kosten","Ausschlaggebend ist für mich das Argument, dass die Umweltkosten des Fleisches bislang nicht im Preis enthalten sind."],
+    ["Meinung: einräumen","Allerdings sollte man einräumen, dass eine Steuer nur akzeptiert wird, wenn die Einnahmen sichtbar zweckgebunden verwendet werden."],
+    ["Heimatland","In meinem Heimatland spielt Fleisch in der Alltagsküche traditionell eine große Rolle, doch auch dort wächst das Angebot pflanzlicher Alternativen."],
+    ["Schluss: moderate Abgabe","Zusammenfassend plädiere ich für eine moderate Abgabe, deren Erträge in Tierwohl und günstigere pflanzliche Lebensmittel fließen."]]},
+};
+const KERN_STICHWORT = {
+  5:["Zugang ≠ Einkommen","abschrecken → Ungleichheit","öffentliches Gut","zielstrebiger abschließen","nur mit sozialer Abfederung","Einnahmen → Qualität der Lehre"],
+  6:["jederzeit abrufbar → Nebenjob","persönlicher Austausch fehlt","Selbstdisziplin am Bildschirm","Uni = Ort der Begegnung","Chance für ländliche Regionen","hybride Modelle"],
+  7:["Sprache im Alltag anwenden","interkulturelle Kompetenz","Anerkennung → Verlängerung","persönliche Reifung","erhebliche Kosten","nicht vom Geldbeutel abhängen"],
+  8:["Luftqualität → Gesundheit","Parkplätze → Grünflächen","Einzelhandel: Umsatzeinbußen","Ältere & Pendler angewiesen","saubere Luft > Bequemlichkeit","Voraussetzung: Nahverkehr"],
+  9:["gläserne Decke","freiwillig: kaum Wirkung","Vorbilder ermutigen","Qualifikation entscheidet","Symptome vs. Ursachen","gemischte Teams"],
+  10:["Miete entfällt → mehr Zeit","Auszug = Selbstständigkeit","eigenen Haushalt führen","Lebensrhythmen → Konflikte","Studium = ideale Zeit","WG als Mittelweg"],
+  11:["internationale Wissenschaftssprache","Qualität der Lehre leidet","Diskussionen verflachen","Fachbegriffe nur auf Englisch","Fundament in sicherer Sprache","zieht Studierende aus aller Welt an"],
+  12:["finanzielle Unabhängigkeit","Berufserfahrung & Kontakte","über 15 Stunden → Noten","fachfremd bringt wenig","Studium hat Vorrang","freie Entscheidung bleiben"],
+};
+
+function reprotrainer(w) {
+  const zeile = (st, satz) => `<details class="ueb"><summary>🔑 <span class="mod">${st}</span></summary>
+    <div class="loes">${satz}</div></details>`;
+  const ganz = (saetze, label) => `<details class="ueb"><summary><b>📄 ${label}</b></summary>
+    <div style="margin:6px 0 2px; padding:8px 12px; border-left:3px solid var(--blau); font-style:italic;">${saetze.join(" ")}</div></details>`;
+  const hr = `<hr style="border:none; border-top:1px solid var(--rand); margin:10px 0;">`;
+  if (REPRO[w]) {
+    const r = REPRO[w];
+    return `<b>🧠 Reproduktions-Trainer: „${r.t}“</b> — ein kompletter Musteraufsatz nach der Schablone,
+      versteckt hinter Stichworten. Zu jedem Stichwort den Satz laut sagen oder aufschreiben — <b>erst dann</b> antippen und vergleichen.`
+      + r.s.map(([st, sa]) => zeile(st, sa)).join("") + ganz(r.s.map(x => x[1]), "Zeige den ganzen Text") + hr;
+  }
+  if (KERNSAETZE[w] && KERN_STICHWORT[w]) {
+    return `<b>🧠 Kernsatz-Trainer „${P2[w].thema}“</b> — zu jedem Stichwort den Kernsatz der Woche aus dem Gedächtnis
+      sagen oder aufschreiben — <b>erst dann</b> antippen und vergleichen.`
+      + KERN_STICHWORT[w].map((st, i) => zeile(st, KERNSAETZE[w][i])).join("") + ganz(KERNSAETZE[w], "Zeige alle Kernsätze") + hr;
+  }
+  return "";
 }
 
 // ── Spaced Repetition: Gelerntes kommt nach 1, 3 und 7 Wochen zurück ────
@@ -447,14 +653,15 @@ function tag(d) {
     ? { z:"60′", t:"Schreiben digital (wie in der Prüfung)", x:`<b>Aufgabe 1:</b> Zusammenfassung (25′, nächster Übungstext aus ${datei("23")}) + <b>Aufgabe 2:</b> Stellungnahme (30′, Sprechkarte aus ${datei("14")} als Thema). Beides <b>tippen</b>, nicht schreiben!`, m: MAT.zsf }
     : { z:"60′", t:"Schreiben", x:di, m: w <= 1 ? MAT.grafik : MAT.schablone };
   const ksMat = p2 ? "<b>Die 6 Kernsätze der Woche:</b><br>" + KERNSAETZE[w].map((s,i) => `${i+1}. ${s}`).join("<br>") : null;
+  const reproMat = reprotrainer(w);   // Samstag: Text hinter Stichworten (W1–4 Aufsatz, W5–12 Kernsätze)
 
   const TAGE = [
     [ { z:"60′", t:"Wortschatz & Grammatik", x:mo_, m: ksMat || MAT.wortschatz }, { z:"30′", t:"Anki-Wiederholung", x:"Decks „TestDaF“ + „Meine Fehler“ — beide CSV-Dateien unten im Fuß herunterladen" } ],
     [ diTask, { z:"30′", t:"Selbstcheck + Korrektur organisieren", x:"Checkliste aufklappen und Punkt für Punkt durchgehen; Text an Tutor/KI schicken (Prüf-Prompt in " + datei("03") + ")", m: MAT.checkliste } ],
     [ { z:"45′", t:"Hören", x:"Übungstest, DW oder Podcast — mit Notizen wie in der Prüfung", m: MAT.hoeren }, { z:"45′", t:"Redemittel Sprechen", x:"laut lernen (nicht lesen — sprechen!)", m: MAT.redemittel } ],
     [ { z:"60′", t:"Sprechen", x:do_, m: MAT.sprechen7 }, { z:"30′", t:"Anhören & verbessern", x:"Aufnahme anhören, 2–3 Antworten verbessert neu aufnehmen", m: MAT.redemittel } ],
-    [ { z:"45′", t:"Lesen", x:"Übungstest oder Zeitungsartikel", m: MAT.lesen }, { z:"45′", t:"Di-Text überarbeiten", x:"Korrigierte Fassung durcharbeiten; jeden Fehler als Anki-Karte: falscher Satz → richtiger Satz" + (p2 ? `. Jetzt den Musteraufsatz vergleichen (${datei(p2.essay)}, Nr. ${p2.nr}) und die 6 Kernsätze lernen` : ""), m: MAT.checkliste } ],
-    [ { z:"60′", t:"Reproduktion", x:sa, m: ksMat || MAT.schablone }, { z:"30′", t:"Reservezeit", x:"in den schwächsten Teil laut Diagnose (Woche 0) stecken" } ],
+    [ { z:"45′", t:"Lesen", x:"Erst den 📖 Übungstext der Woche lösen (Spickzettel unten aufklappen, ca. 15 Min.) — danach Übungstest oder Zeitungsartikel", m: lesetext(w) + MAT.lesen }, { z:"45′", t:"Di-Text überarbeiten", x:"Korrigierte Fassung durcharbeiten; jeden Fehler als Anki-Karte: falscher Satz → richtiger Satz" + (p2 ? `. Jetzt den Musteraufsatz vergleichen (${datei(p2.essay)}, Nr. ${p2.nr}) und die 6 Kernsätze lernen` : ""), m: MAT.checkliste } ],
+    [ { z:"60′", t:"Reproduktion", x:sa, m: reproMat ? reproMat + MAT.schablone : (ksMat || MAT.schablone) }, { z:"30′", t:"Reservezeit", x:"in den schwächsten Teil laut Diagnose (Woche 0) stecken" } ],
   ];
   r.tasks = TAGE[wd].concat(wiederholungen(w, wd));
   if (w <= 4 && wd === 2) r.tasks.push({ z:"10′", t:"⌨️ Tipp-Training (deutsches QWERTZ)", x:`<a href="https://www.keybr.com" target="_blank">keybr.com</a> oder <a href="https://www.typing.com" target="_blank">typing.com</a>, Layout Deutsch — Ziel 25 Wörter/Min. (${datei("24")})` });
