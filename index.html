@@ -55,6 +55,8 @@
   details.ueb summary { cursor:pointer; }
   details.ueb summary .mod { color:var(--blau); font-weight:700; }
   details.ueb .loes { margin:6px 0 2px 18px; color:#2ca02c; font-weight:600; }
+  .lk { color:var(--blau); border-bottom:1px dashed var(--blau); cursor:pointer; font-weight:600; }
+  .lk.auf { color:#2ca02c; border-bottom-color:#2ca02c; }
   .balken { height:8px; border-radius:99px; background:var(--rand); overflow:hidden; margin:8px 0 2px; }
   .balken div { height:100%; background:#2ca02c; transition:width .3s; }
   a { color:var(--blau); }
@@ -465,6 +467,44 @@ function reprotrainer(w) {
   return "";
 }
 
+// ── Lückentexte (Montag): wissenschaftssprachliche Strukturen ────────────
+// Wie im digitalen TestDaF: kurzer akademischer Text, Lücken = Präpositionen,
+// Konnektoren, feste Verbindungen. {Wort} = Lücke; antippen deckt auf.
+const LUECKEN = [
+  { t:"Studiengebühren", x:`Ob Studiengebühren wieder eingeführt werden sollten, wird seit Jahren kontrovers {diskutiert}. Befürworter weisen darauf {hin}, dass zusätzliche Mittel der Qualität der Lehre {zugutekommen}. Kritiker wenden dagegen {ein}, dass der Zugang zur Bildung nicht {vom} Einkommen der Eltern abhängen dürfe. Trotz {des} gebührenfreien Studiums arbeiten viele Studierende nebenbei, {weil} die Mieten stark gestiegen sind. Je höher die Beiträge ausfallen, {desto} stärker werden einkommensschwache Familien abgeschreckt.` },
+  { t:"Online-Studium", x:`Während der Pandemie {verlagerte} sich die Lehre fast vollständig in den digitalen Raum. Aufgezeichnete Vorlesungen stehen den Studierenden rund um die Uhr zur {Verfügung}. Das Lernen am Bildschirm erfordert jedoch ein hohes Maß {an} Selbstdisziplin. Viele Erstsemester klagen {über} fehlenden persönlichen Austausch. Hybride Modelle gelten {als} tragfähiger Kompromiss, {da} sie die Stärken beider Welten verbinden. Ob reine Online-Studiengänge gleichwertig sind, {hängt} von der didaktischen Aufbereitung {ab}.` },
+  { t:"Auslandsstudium", x:`Die Zahl der Studierenden, die einen Teil ihres Studiums im Ausland {verbringen}, hat sich nahezu verdoppelt. Arbeitgeber schätzen Auslandserfahrung, {weil} sie Selbstständigkeit belegt. Problematisch bleibt die Anerkennung der im Ausland {erbrachten} Leistungen: Rund ein Drittel der Rückkehrer berichtet {von} Verzögerungen im Studium. Die Mobilität hängt zudem stark {von} der sozialen Herkunft {ab} — Kinder aus Akademikerfamilien gehen doppelt {so} häufig ins Ausland {wie} andere.` },
+  { t:"Autofreie Innenstädte", x:`Immer mehr Städte sperren ihre Zentren {für} den privaten Autoverkehr. Entgegen den Befürchtungen des Einzelhandels blieb der Umsatzeinbruch überwiegend {aus}. Die Luftqualität hat sich messbar {verbessert}. Pendler verweisen allerdings {darauf}, dass sie auf das Auto angewiesen {sind}, solange der Nahverkehr nicht ausgebaut {ist}. Autofreie Zonen funktionieren nur {als} Teil eines Gesamtkonzepts; andernfalls {verlagert} sich der Verkehr in die angrenzenden Wohnviertel.` },
+  { t:"Frauenquote", x:`Seit Einführung der Quote ist der Frauenanteil in den Aufsichtsräten deutlich {gestiegen}. Freiwillige Selbstverpflichtungen hatten zuvor kaum etwas {bewirkt}. Gegner stellen die Qualifikation der berufenen Frauen {infrage}. Studien aus Norwegen berichten jedoch weder {von} Leistungseinbrüchen noch von einem automatischen Kulturwandel. Forscherinnen kommen zu dem Ergebnis, {dass} Quoten flankierende Maßnahmen {brauchen} — {etwa} planbare Karrierewege und Führung in Teilzeit.` },
+  { t:"Wohnen bei den Eltern", x:`Mehr als ein Viertel der 25-Jährigen wohnt {bei} den Eltern — unter Männern ist der Anteil höher {als} unter Frauen. Als Hauptgrund {gelten} die stark gestiegenen Mieten. Psychologen warnen jedoch {davor}, dies vorschnell als verlängerte Kindheit zu {deuten}. Entscheidend sei nicht die Adresse, {sondern} die Übernahme von Verantwortung. Eine Wohngemeinschaft kann Selbstständigkeit {fördern}; zwingend ist der Auszug {nicht}.` },
+  { t:"Englischsprachige Studiengänge", x:`Mehr als jeder zehnte Masterstudiengang wird vollständig auf Englisch {unterrichtet}. Die Hochschulen versprechen sich {davon} internationale Sichtbarkeit. Sprachwissenschaftler befürchten hingegen, das Deutsche {drohe} als Wissenschaftssprache zu verarmen. Wenn weder Lehrende noch Studierende in ihrer Muttersprache arbeiten, {verflachen} die Diskussionen messbar. Einen Mittelweg gehen Hochschulen, {indem} sie englischsprachige Programme {mit} verpflichtenden Deutschkursen kombinieren.` },
+  { t:"Nebenjob im Studium", x:`Rund zwei Drittel der Studierenden gehen neben dem Studium einer Arbeit {nach}. Steigende Lebenshaltungskosten machen den Job zur {Notwendigkeit}. Bis etwa fünfzehn Wochenstunden bleiben die Noten weitgehend {stabil}; wer mehr arbeitet, braucht länger {bis} zum Abschluss. Fachnahe Tätigkeiten erleichtern nachweislich den {Berufseinstieg}, während fachfremde Jobs {kaum} Vorteile bringen. Studierendenvertreter fordern, die Förderung so {auszubauen}, dass Arbeiten wieder eine freie Entscheidung {wird}.` },
+  { t:"Homeoffice", x:`Etwa ein Viertel der Beschäftigten arbeitet regelmäßig {von} zu Hause. Konzentrierte Einzelarbeit gelingt dort häufig {besser}, während kreative Teamaufgaben unter der Distanz {leiden}. Einige Konzerne haben ihre Beschäftigten {zu} mehreren Präsenztagen pro Woche verpflichtet — meist {gegen} erheblichen Widerstand der Belegschaft. Gerade Berufseinsteiger vermissen Netzwerke und informelles {Lernen}. Hybride Modelle gelten derzeit {als} tragfähigster Kompromiss.` },
+  { t:"Fachkräftemangel", x:`Mit dem Renteneintritt der Babyboomer {verliert} der Arbeitsmarkt Millionen Arbeitskräfte. Schon heute bleiben Stellen in Pflege und Handwerk monatelang {unbesetzt}. Kamen früher vier Erwerbstätige {auf} einen Rentner, sind es bald nur noch zwei. Ökonomen sind sich {darin} einig, dass keine einzelne Maßnahme {ausreicht}. Diskutiert wird ein Bündel {aus} Zuwanderung, Automatisierung und höherer Erwerbsbeteiligung von Frauen. Gewerkschaften verweisen {auf} körperlich belastende Berufe.` },
+  { t:"Organspende", x:`Obwohl über achtzig Prozent der Deutschen der Organspende positiv {gegenüberstehen}, besitzt nur ein Drittel einen Ausweis. Der Bundestag hat die Widerspruchslösung mehrfach {abgelehnt}. Spanien führt seinen Erfolg weniger auf die Rechtslage {zurück} als auf die Organisation in den Kliniken: Geschulte Transplantationsbeauftragte sprechen Angehörige früh {an}. Fachleute fordern, das Gespräch mit den Familien nicht dem Zufall zu {überlassen}.` },
+  { t:"E-Mobilität", x:`Der Anteil der E-Autos {an} den Neuzulassungen ist auf über zwanzig Prozent {gestiegen}. Nach dem Auslaufen der Kaufprämie brachen die Zahlen zeitweise {ein}. Über den gesamten Lebenszyklus schneidet ein E-Auto besser {ab} als ein Verbrenner — {je} grüner der Strommix, desto deutlicher der Vorteil. Auf dem Land bleibt das Laden {umständlich}. Verkehrsforscher warnen {davor}, die Verkehrswende auf den bloßen Antriebswechsel zu {verkürzen}.` },
+];
+
+function lkToggle(el) {
+  const auf = el.classList.toggle("auf");
+  el.textContent = auf ? el.dataset.l : "______";
+}
+function lkAuf(el) { el.classList.add("auf"); el.textContent = el.dataset.l; }
+
+function lueckentext(w) {
+  const l = LUECKEN[(w - 1) % LUECKEN.length];
+  let n = 0;
+  const text = l.x.replace(/\{([^}]+)\}/g, (m, wort) => {
+    n++;
+    return `<span class="lk" data-l="${wort}" onclick="lkToggle(this)">______</span><sup>${n}</sup>`;
+  });
+  return `<b>✏️ Lückentext der Woche: „${l.t}“</b> — wie im digitalen TestDaF (wissenschaftssprachliche Strukturen):
+    jede Lücke <b>erst laut lösen</b>, dann antippen — die Antwort erscheint (nochmal antippen = wieder zu).
+    <div style="margin:8px 0; padding:8px 12px; border-left:3px solid var(--blau); line-height:1.9;">${text}</div>
+    <a href="#" onclick="this.parentNode.querySelectorAll('.lk').forEach(lkAuf); return false;">🔓 Alle Lücken aufdecken</a>
+    <hr style="border:none; border-top:1px solid var(--rand); margin:10px 0;">`;
+}
+
 // ── Spaced Repetition: Gelerntes kommt nach 1, 3 und 7 Wochen zurück ────
 // Runde 1 (+1 Wo, Montag) · Runde 2 (+3 Wo, Freitag) · Runde 3 (+7 Wo, Montag)
 function wiederholungen(w, wd) {
@@ -656,7 +696,7 @@ function tag(d) {
   const reproMat = reprotrainer(w);   // Samstag: Text hinter Stichworten (W1–4 Aufsatz, W5–12 Kernsätze)
 
   const TAGE = [
-    [ { z:"60′", t:"Wortschatz & Grammatik", x:mo_, m: ksMat || MAT.wortschatz }, { z:"30′", t:"Anki-Wiederholung", x:"Decks „TestDaF“ + „Meine Fehler“ — beide CSV-Dateien unten im Fuß herunterladen" } ],
+    [ { z:"60′", t:"Wortschatz & Grammatik", x:mo_ + " · dazu der ✏️ Lückentext der Woche im Spickzettel unten", m: lueckentext(w) + (ksMat || MAT.wortschatz) }, { z:"30′", t:"Anki-Wiederholung", x:"Decks „TestDaF“ + „Meine Fehler“ — beide CSV-Dateien unten im Fuß herunterladen" } ],
     [ diTask, { z:"30′", t:"Selbstcheck + Korrektur organisieren", x:"Checkliste aufklappen und Punkt für Punkt durchgehen; Text an Tutor/KI schicken (Prüf-Prompt in " + datei("03") + ")", m: MAT.checkliste } ],
     [ { z:"45′", t:"Hören", x:"Übungstest, DW oder Podcast — mit Notizen wie in der Prüfung", m: MAT.hoeren }, { z:"45′", t:"Redemittel Sprechen", x:"laut lernen (nicht lesen — sprechen!)", m: MAT.redemittel } ],
     [ { z:"60′", t:"Sprechen", x:do_, m: MAT.sprechen7 }, { z:"30′", t:"Anhören & verbessern", x:"Aufnahme anhören, 2–3 Antworten verbessert neu aufnehmen", m: MAT.redemittel } ],
