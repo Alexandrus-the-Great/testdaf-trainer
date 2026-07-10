@@ -505,6 +505,55 @@ function lueckentext(w) {
     <hr style="border:none; border-top:1px solid var(--rand); margin:10px 0;">`;
 }
 
+// ── Redemittel im Einsatz: volle Beispielsätze mit antippbaren Lücken ────
+// Überall, wo ein Spickzettel Redemittel nur als „…“-Gerüst zeigt, folgen
+// komplette C1-Beispielsätze aus unseren Themen; {Wort} = Lücke zum Antippen.
+const lz = t => t.replace(/\{([^}]+)\}/g, (m, wort) => `<span class="lk" data-l="${wort}" onclick="lkToggle(this)">______</span>`);
+const BSP = {
+  schablone: [
+    `Ob ein generelles Tempolimit sinnvoll ist, wird seit Langem kontrovers {diskutiert}.`,
+    `Die Befürworter führen ins {Feld}, dass ein Tempolimit die Zahl schwerer Unfälle deutlich {senken} würde.`,
+    `Darüber hinaus wird {angeführt}, dass zusätzliche Einnahmen der Qualität der Lehre {zugutekommen}.`,
+    `Die Gegner wenden dagegen {ein}, dass eine Steuer einkommensschwache Haushalte überproportional {belaste} (Konjunktiv I!).`,
+    `Kritiker {befürchten}, unmotivierte Pflichtkräfte könnten die Qualität der Betreuung {verschlechtern}.`,
+    `Ausschlaggebend ist für mich das {Argument}, dass der Zugang zur Bildung nicht vom Einkommen der Eltern {abhängen} darf.`,
+    `Allerdings sollte man {einräumen}, dass ein Verbot allein das Problem nicht {löst}.`,
+    `In meinem Heimatland ist die {Situation} ähnlich: Auch dort {steigen} die Mieten seit Jahren.`,
+    `Zusammenfassend lässt sich {festhalten}, dass die Vorteile die Nachteile {überwiegen}.`],
+  redemittel: [
+    `Ich rufe an, {weil} ich mich nach dem Sprachkurs erkundigen {möchte}.`,
+    `Könnten Sie mir sagen, {ob} es noch freie Plätze {gibt}?`,
+    `Mich würde außerdem {interessieren}, wie hoch die Gebühren {ausfallen}.`,
+    `Die Grafik zeigt, wie sich der Fleischkonsum in Deutschland {entwickelt} hat.`,
+    `Einerseits {spricht} für die Quote, dass gemischte Teams bessere Entscheidungen {treffen}; andererseits darf man nicht {übersehen}, dass allein die Qualifikation {entscheiden} sollte.`,
+    `Deshalb {plädiere} ich dafür, die Freiwilligendienste {auszubauen}.`,
+    `An deiner {Stelle} würde ich den Nebenjob {reduzieren} — das Studium hat {Vorrang}.`,
+    `Das lässt sich vermutlich darauf {zurückführen}, dass die Mieten stark {gestiegen} sind.`,
+    `Es ist {anzunehmen}, dass sich dieser Trend in den kommenden Jahren {fortsetzt}.`],
+  grafik: [
+    `Die vorliegende Grafik {informiert} über die Entwicklung der Studierendenzahlen in Deutschland.`,
+    `Die Daten {stammen} vom Statistischen Bundesamt und {beziehen} sich auf die Jahre 2010 bis 2024; die Angaben {erfolgen} in Prozent.`,
+    `Auffällig ist, {dass} sich der Anteil der E-Autos nahezu {verdoppelt} hat.`,
+    `Während der Anteil 2010 bei knapp zehn Prozent {lag}, {beträgt} er heute gut vierzig Prozent.`,
+    `An der Spitze {liegt} Norwegen, während Deutschland das Schlusslicht {bildet}.`,
+    `Zusammenfassend lässt sich ein durchgehender {Aufwärtstrend} erkennen.`],
+  sprechen7: [
+    `Zu dieser Frage gibt es unterschiedliche {Meinungen}: Einerseits {entlastet} ein Pflichtjahr die sozialen Berufe, andererseits {greift} es tief in die Lebensplanung junger Menschen {ein}.`,
+    `Ich persönlich bin der {Meinung}, dass die Vorteile {überwiegen}, und zwar aus folgendem {Grund}: Saubere Luft ist ein Grundbedürfnis.`,
+    `Ein Grund für den Anstieg {könnte} sein, dass das Homeoffice viele Fahrten überflüssig {macht}.`,
+    `Wenn sich dieser Trend {fortsetzt}, {dürfte} der Anteil weiter steigen.`,
+    `Abschließend würde ich dir {empfehlen}, dich frühzeitig zu {bewerben}.`],
+  zsf: [
+    `Der vorliegende Text {thematisiert} den anhaltenden Rückgang des Fleischkonsums in Deutschland.`,
+    `Der Autor {betont}, es {gebe} einen Strukturbruch in der Landwirtschaft (Konjunktiv I!).`,
+    `Umstritten {sei}, ob der Staat den Wandel über Steuern {beschleunigen} solle.`,
+    `Abschließend {plädiert} der Autor {für} gezielte Übergangshilfen.`],
+};
+for (const k of Object.keys(BSP))
+  MAT[k] += `<hr style="border:none; border-top:1px solid var(--rand); margin:8px 0;">` +
+    `<b>✏️ Die Redemittel im Einsatz</b> — volle Beispielsätze (B2→C1+), Lücke antippen = Lösung:<br>` +
+    BSP[k].map(s => "· " + lz(s)).join("<br>");
+
 // ── Spaced Repetition: Gelerntes kommt nach 1, 3 und 7 Wochen zurück ────
 // Runde 1 (+1 Wo, Montag) · Runde 2 (+3 Wo, Freitag) · Runde 3 (+7 Wo, Montag)
 function wiederholungen(w, wd) {
