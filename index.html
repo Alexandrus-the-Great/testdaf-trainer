@@ -46,6 +46,11 @@
   .woche a.aktiv { border-color:var(--blau); font-weight:700; color:var(--blau); }
   .woche a.voll { background:rgba(44,160,44,.18); border-color:#2ca02c; }
   .woche a.teil { background:rgba(255,160,0,.15); }
+  details.ueb { border-top:1px solid var(--rand); padding:8px 0; }
+  details.ueb:first-of-type { border-top:none; }
+  details.ueb summary { cursor:pointer; }
+  details.ueb summary .mod { color:var(--blau); font-weight:700; }
+  details.ueb .loes { margin:6px 0 2px 18px; color:#2ca02c; font-weight:600; }
   .balken { height:8px; border-radius:99px; background:var(--rand); overflow:hidden; margin:8px 0 2px; }
   .balken div { height:100%; background:#2ca02c; transition:width .3s; }
   a { color:var(--blau); }
@@ -66,7 +71,8 @@
   <div class="fuss">
     📚 Alle Materialien: <a href="TestDaF-Kirill-Komplett.html" target="_blank">Komplettpaket im Browser</a> ·
     <a href="TestDaF-Kirill-Komplett.pdf" target="_blank">PDF zum Drucken</a> ·
-    <a href="anki-kernsaetze.csv" download>Anki-Deck (CSV)</a> ·
+    <a href="anki-kernsaetze.csv" download>Anki: Kernsätze</a> ·
+    <a href="anki-grammatik.csv" download>Anki: Grammatik</a> ·
     Haken werden auf diesem Gerät gespeichert.
   </div>
 </div>
@@ -123,6 +129,101 @@ const P3_KALT = {
 };
 const P3_THEMEN = ["Organspende","Zoos","Bargeldabschaffung","Massentourismus","Noten in der Schule","Werbung für Kinder"];
 const P4_KALT = { 19:["thema-41-flug-bahn.svg","Flug vs. Bahn"], 20:["thema-45-e-auto.svg","E-Auto-Zulassungen"] };
+
+// ── Übungsblock: Grammatik & Wortschatz aus unseren Texten (Datei 22) ───
+const UEB = {
+  1: { n:"Nominalisierung", items:[
+    ["„Der Anteil ist von zehn auf vierzig Prozent gestiegen.“ → nominal","der Anstieg des Anteils von zehn auf vierzig Prozent"],
+    ["„Die Zahl der Auslandsstudierenden hat sich nahezu verdoppelt.“ → nominal","die nahezu vollständige Verdopplung der Zahl der Auslandsstudierenden"],
+    ["„Die Mieten steigen.“ → mit „wegen“","wegen der steigenden Mieten / des Mietanstiegs"],
+    ["„Viele Hochschulen wurden digitalisiert.“ → nominal","die Digitalisierung vieler Hochschulen"],
+    ["„die Abschaffung der Studiengebühren“ → verbal","Die Studiengebühren werden abgeschafft."],
+    ["„der Rückgang des Fleischkonsums“ → verbal","Der Fleischkonsum geht zurück."],
+    ["„Immer mehr Beschäftigte arbeiten von zu Hause.“ → nominal","die Zunahme des Homeoffice"],
+    ["„die Einführung eines Tempolimits“ → verbal","Ein Tempolimit wird eingeführt."],
+    ["„Die Bevölkerung altert.“ → nominal","die Alterung der Bevölkerung"],
+    ["„die Verlagerung der Lehre in den digitalen Raum“ → verbal","Die Lehre verlagert sich in den digitalen Raum."]]},
+  2: { n:"Konnektoren", items:[
+    ["„Viele Studierende jobben, weil die Mieten steigen.“ → mit „aufgrund“","Aufgrund der steigenden Mieten jobben viele Studierende."],
+    ["„Obwohl das Studium gebührenfrei ist, arbeiten die meisten nebenbei.“ → mit „trotz“","Trotz des gebührenfreien Studiums arbeiten die meisten nebenbei."],
+    ["„Die Innenstädte werden lauter. Deshalb wünschen sich viele autofreie Zentren.“ → mit „je … desto“","Je lauter die Innenstädte werden, desto mehr Menschen wünschen sich autofreie Zentren."],
+    ["„Wenn man regelmäßig teilnimmt, besteht man häufiger.“ → mit „bei“","Bei regelmäßiger Teilnahme besteht man die Prüfung deutlich häufiger."],
+    ["„Über 80 % nutzen KI, denn die Werkzeuge sind kostenlos.“ → mit „da“","Da die Werkzeuge kostenlos sind, nutzen über 80 % der Studierenden KI."],
+    ["„Der Pkw-Bestand wächst. Trotzdem steigt die Zustimmung zu autofreien Zentren.“ → mit „obwohl“","Obwohl der Pkw-Bestand wächst, steigt die Zustimmung zu autofreien Zentren."],
+    ["Verbinde mit „während“: „Väter arbeiten meist Vollzeit. Mütter arbeiten meist Teilzeit.“","Während Väter meist Vollzeit arbeiten, sind Mütter überwiegend in Teilzeit beschäftigt."],
+    ["„Die Babyboomer gehen in Rente. Folglich fehlen Fachkräfte.“ → mit „da“ (ein Satz)","Da die Babyboomer in Rente gehen, fehlen Fachkräfte."]]},
+  3: { n:"Passiv(ersatz)", items:[
+    ["„Man kann die Kosten senken.“ → 2 Passiversatz-Formen","Die Kosten lassen sich senken. / Die Kosten sind zu senken."],
+    ["„Man muss das Rentensystem reformieren.“ → mit „sein + zu“","Das Rentensystem ist zu reformieren."],
+    ["„Man kann den Trend deutlich erkennen.“ → mit „-bar“","Der Trend ist deutlich erkennbar."],
+    ["„Die Universität schaffte die Anwesenheitspflicht ab.“ → Passiv Präteritum","Die Anwesenheitspflicht wurde abgeschafft."],
+    ["„Man darf Werbung für Tabak nicht ausstrahlen.“ → Passiv mit Modalverb","Werbung für Tabak darf nicht ausgestrahlt werden."],
+    ["„Diese Frage kann man nicht leicht beantworten.“ → mit „sein + zu“","Diese Frage ist nicht leicht zu beantworten."],
+    ["„2020 führten viele Firmen das Homeoffice ein.“ → Passiv","2020 wurde das Homeoffice in vielen Firmen eingeführt."],
+    ["„Man sollte Kurzstreckenflüge vermeiden.“ → 2 Varianten","Kurzstreckenflüge sind zu vermeiden. / … sollten vermieden werden."]]},
+  4: { n:"Konjunktiv I", items:[
+    ["Kritiker: „Studiengebühren sind sozial ungerecht.“","Kritiker meinen, Studiengebühren seien sozial ungerecht."],
+    ["Befürworter: „Gebühren verbessern die Qualität der Lehre.“","Befürworter argumentieren, Gebühren würden die Qualität der Lehre verbessern."],
+    ["Die Studie: „Der Krankenstand ist deutlich gesunken.“","Die Studie besagt, der Krankenstand sei deutlich gesunken."],
+    ["Experten: „Das Rentensystem muss reformiert werden.“","Experten fordern, das Rentensystem müsse reformiert werden."],
+    ["Die Autorin: „Jugendliche verbringen vier Stunden täglich am Smartphone.“","Die Autorin schreibt, Jugendliche verbrächten vier Stunden täglich am Smartphone."],
+    ["Der Bericht: „Die Zahl der E-Autos wird weiter steigen.“","Dem Bericht zufolge werde die Zahl der E-Autos weiter steigen."],
+    ["Gegner: „Ein Tempolimit bringt nichts.“","Gegner behaupten, ein Tempolimit bringe nichts."],
+    ["Der Minister: „Wir haben keine Alternative.“","Der Minister erklärte, man habe keine Alternative."]]},
+  5: { n:"Redemittel-Lücke", items:[
+    ["„Die vorliegende Grafik ______ über die Höhe der Studiengebühren.“","informiert"],
+    ["„Die Daten ______ von der OECD und ______ sich auf das Jahr 2024.“","stammen · beziehen"],
+    ["„Die Angaben ______ in Prozent.“","erfolgen"],
+    ["„______ ist der durchgehende Aufwärtstrend.“","Auffällig"],
+    ["„An der Spitze ______ die USA, während Deutschland im Mittelfeld ______.“","liegen · rangiert"],
+    ["„Zusammenfassend ______ sich festhalten, dass …“","lässt"],
+    ["„Der Anteil ist ______ rund zehn ______ über vierzig Prozent gestiegen.“","von · auf"],
+    ["„Ein Grund ______ könnte sein, dass die Mieten steigen.“","dafür"]]},
+  6: { n:"Nomen-Verb / Präposition", items:[
+    ["„Die Digitalisierung spielt eine wichtige ______.“","Rolle"],
+    ["„Kostenlose Werkzeuge stehen rund um die Uhr zur ______.“","Verfügung"],
+    ["„Der Prüfungserfolg hängt ______ der regelmäßigen Teilnahme ______.“","von · ab"],
+    ["„Steigende Mieten führen ______, dass mehr Studierende arbeiten müssen.“","dazu"],
+    ["„Mehrere Faktoren tragen ______ Fachkräftemangel ______.“","zum · bei"],
+    ["„Für viele Familien kommt ein Heimplatz nicht in ______.“","Frage"],
+    ["„Städte müssen Rücksicht ______ ältere Menschen ______.“","auf · nehmen"],
+    ["„Immer mehr Jugendliche setzen sich ______ die Umwelt ______.“","für · ein"],
+    ["„Viele üben Kritik ______ diesem Modell.“","an"],
+    ["„Am Ende muss die Politik eine Entscheidung ______.“","treffen"]]},
+  7: { n:"Wortfamilie", items:[
+    ["steigen → Nomen + Adjektiv","der Anstieg · steigend"],
+    ["sinken → Nomen + Adjektiv","der Rückgang · rückläufig"],
+    ["wachsen → Nomen","das Wachstum"],
+    ["zunehmen → Nomen","die Zunahme"],
+    ["abnehmen → Nomen","die Abnahme"],
+    ["sich verdoppeln → Nomen","die Verdopplung"],
+    ["stagnieren → Nomen","die Stagnation"],
+    ["sich erhöhen → Nomen","die Erhöhung"]]},
+  8: { n:"Synonym C1", items:[
+    ["„ein wichtiger Punkt“ → 2 C1-Wörter","entscheidend · zentral · maßgeblich"],
+    ["„viele Studierende“ → C1","zahlreiche · ein erheblicher Teil der Studierenden"],
+    ["„ein gutes Argument“ → C1","ein überzeugendes / stichhaltiges Argument"],
+    ["„schlechte Folgen“ → C1","problematische / nachteilige / bedenkliche Folgen"],
+    ["„Die Studie sagt, dass …“ → C1","belegt · zeigt auf · hebt hervor"],
+    ["„ein großes Problem“ → C1","eine große Herausforderung · ein gravierender Missstand"],
+    ["„Die Grafik zeigt einen Trend.“ → C1","verdeutlicht · veranschaulicht · dokumentiert"],
+    ["„sehr interessant“ → C1","äußerst · überaus · besonders"]]},
+};
+const UEB_WOCHE = { 1:[2,6], 2:[3,5], 3:[4,5], 4:[1,7] };  // ab W5: alle Module rotierend
+
+function uebungsblock(w, d) {
+  const module_ = UEB_WOCHE[w] || [1,2,3,4,5,6,7,8];
+  const listen = module_.map(m => UEB[m].items.map(it => [UEB[m].n, it[0], it[1]]));
+  const pool = [];
+  for (let j = 0; j < Math.max(...listen.map(l => l.length)); j++)
+    for (const l of listen) if (l[j]) pool.push(l[j]);   // Module verschränkt → jeder Tag gemischt
+  const dayIdx = Math.max(0, Math.round((d - START) / TAG));
+  const n = Math.min(4, pool.length);
+  const aufgaben = [];
+  for (let i = 0; i < n; i++) aufgaben.push(pool[(dayIdx*n + i) % pool.length]);
+  return aufgaben.map(([mod, a, l]) => `<details class="ueb"><summary><span class="mod">${mod}:</span> ${a}</summary>
+    <div class="loes">✅ ${l}</div></details>`).join("");
+}
 
 // ── Spaced Repetition: Gelerntes kommt nach 1, 3 und 7 Wochen zurück ────
 // Runde 1 (+1 Wo, Montag) · Runde 2 (+3 Wo, Freitag) · Runde 3 (+7 Wo, Montag)
@@ -257,6 +358,7 @@ function tag(d) {
       ];
       r.notizen.push("Feiertage = lockerer Erhaltungsmodus (30–45 Min. täglich). Kein schlechtes Gewissen!");
       r.tasks = r.tasks.concat(wiederholungen(w, wd));
+      r.uebungen = uebungsblock(w, d);
     } else if (w === 25) {
       r.tasks = wd === 0
         ? [{ z:"", t:"Letzter kompletter Modelltest", x:"alle 4 Teile, mit Prüfungspausen — diese Woche einmal, danach nur noch Wiederholung" }]
@@ -277,7 +379,7 @@ function tag(d) {
 
   // ── fester Wochenrhythmus W1–W22, mit Phasen-Inhalt ──
   const p2 = P2[w];
-  const mo_ = w <= 4 ? "Grammatik-Schwerpunkt: <b>" + P1_GRAMMATIK[w] + "</b> — Übungen aus dem Grammatikbuch (zügig, es ist Wiederholung)"
+  const mo_ = w <= 4 ? "Grammatik-Schwerpunkt: <b>" + P1_GRAMMATIK[w] + "</b> — Übungen: Kasten unten + optional Grammatikbuch (zügig, es ist Wiederholung)"
     : p2 ? `Wortschatz zum Wochenthema <b>„${p2.thema}"</b> sammeln: Vokabeln aus dem Musteraufsatz (${datei(p2.essay)}, Nr. ${p2.nr}) als Anki-Karten`
     : w <= 18 ? "Wortschatz aus dem Fehlertagebuch drillen + Redemittel-Lücken schließen (" + datei("03") + ")"
     : "Nur noch die persönlichen Top-Fehler drillen — keine neuen Grammatikthemen mehr";
@@ -314,6 +416,8 @@ function tag(d) {
     [ { z:"60′", t:"Reproduktion", x:sa }, { z:"30′", t:"Reservezeit", x:"in den schwächsten Teil laut Diagnose (Woche 0) stecken" } ],
   ];
   r.tasks = TAGE[wd].concat(wiederholungen(w, wd));
+  r.tasks.push({ z:"10′", t:"✏️ Übungsblock: Grammatik & Wortschatz", x:"4 Aufgaben im Kasten unten — erst selbst lösen, dann Lösung aufklappen. Alle Übungen: " + datei("22") });
+  r.uebungen = uebungsblock(w, d);
   if (wd === 1 && diImg) r.extra = diImg;
   if (wd === 3 && doImg) r.extra = doImg;
   if (w >= 15 && w <= 17) r.notizen.push("📌 <b>Zur Prüfung anmelden!</b> Spätestens Anfang November auf testdaf.de (Termin Januar 2027).");
@@ -404,6 +508,8 @@ function render() {
       <div class="balken"><div style="width:${alle ? 100*done/alle : 0}%"></div></div></div>` : ""}
     ${revHtml ? `<div class="card"><h3>🔁 Wiederholung (Spaced Repetition)</h3>${revHtml}
       <div class="fuss" style="margin-top:8px;">Gelerntes kommt automatisch nach 1, 3 und 7 Wochen zurück — kurz, aber aus dem Gedächtnis.</div></div>` : ""}
+    ${info.uebungen ? `<div class="card"><h3>✏️ Übungsblock (10 Minuten)</h3>${info.uebungen}
+      <div class="fuss" style="margin-top:8px;">Antippen = Lösung aufklappen. Falsch gelöst? → Karte ins Anki-Deck „Meine Fehler“.</div></div>` : ""}
     ${alle && done >= alle ? `<div class="fertig">✓ Tag geschafft — stark! 💪</div>` : ""}
     ${info.extra}
     ${info.w >= 1 && info.w <= 27 && (d.getDay()+6)%7 !== 6 ? `<div class="fuss">🛁 Dazu heute wie immer: 15–20 Min. „passives Bad" — deutsches YouTube, Podcast oder Serie.</div>` : ""}`;

@@ -1,0 +1,68 @@
+[Nominalisierung] „Der Anteil ist von zehn auf vierzig Prozent gestiegen." → nominal;der Anstieg des Anteils von zehn auf vierzig Prozent
+[Nominalisierung] „Die Zahl der Auslandsstudierenden hat sich nahezu verdoppelt." → nominal;die nahezu vollständige Verdopplung der Zahl der Auslandsstudierenden
+[Nominalisierung] „Die Mieten steigen." → mit „wegen";wegen der steigenden Mieten / wegen des Mietanstiegs
+[Nominalisierung] „Viele Hochschulen wurden digitalisiert." → nominal;die Digitalisierung vieler Hochschulen
+[Verbalisierung] „die Abschaffung der Studiengebühren" → verbal;Die Studiengebühren werden abgeschafft.
+[Verbalisierung] „der Rückgang des Fleischkonsums" → verbal;Der Fleischkonsum geht zurück.
+[Nominalisierung] „Immer mehr Beschäftigte arbeiten von zu Hause." → nominal;die Zunahme des Homeoffice / der Arbeit von zu Hause
+[Verbalisierung] „die Einführung eines Tempolimits" → verbal;Ein Tempolimit wird eingeführt.
+[Nominalisierung] „Die Bevölkerung altert." → nominal;die Alterung der Bevölkerung
+[Verbalisierung] „die Verlagerung der Lehre in den digitalen Raum" → verbal;Die Lehre verlagert sich in den digitalen Raum.
+[Konnektor] „Viele Studierende jobben, weil die Mieten steigen." → mit „aufgrund";Aufgrund der steigenden Mieten jobben viele Studierende.
+[Konnektor] „Obwohl das Studium gebührenfrei ist, arbeiten die meisten nebenbei." → mit „trotz";Trotz des gebührenfreien Studiums arbeiten die meisten nebenbei.
+[Konnektor] „Die Innenstädte werden lauter. Deshalb wünschen sich viele autofreie Zentren." → mit „je … desto";Je lauter die Innenstädte werden, desto mehr Menschen wünschen sich autofreie Zentren.
+[Konnektor] „Wenn man regelmäßig teilnimmt, besteht man die Prüfung deutlich häufiger." → mit „bei";Bei regelmäßiger Teilnahme besteht man die Prüfung deutlich häufiger.
+[Konnektor] „Über 80 % der Studierenden nutzen KI, denn die Werkzeuge sind kostenlos." → mit „da";Da die Werkzeuge kostenlos sind, nutzen über 80 % der Studierenden KI.
+[Konnektor] „Der Pkw-Bestand wächst. Trotzdem steigt die Zustimmung zu autofreien Zentren." → mit „obwohl";Obwohl der Pkw-Bestand wächst, steigt die Zustimmung zu autofreien Zentren.
+[Konnektor] Verbinde mit „während": „Väter arbeiten meist Vollzeit. Mütter arbeiten meist Teilzeit.";Während Väter meist Vollzeit arbeiten, sind Mütter überwiegend in Teilzeit beschäftigt.
+[Konnektor] „Die Babyboomer gehen in Rente. Folglich fehlen Fachkräfte." → mit „da" (ein Satz);Da die Babyboomer in Rente gehen, fehlen Fachkräfte.
+[Passiversatz] „Man kann die Kosten senken." → 2 Formen;Die Kosten lassen sich senken. / Die Kosten sind zu senken.
+[Passiversatz] „Man muss das Rentensystem reformieren." → mit „sein + zu";Das Rentensystem ist zu reformieren.
+[Passiversatz] „Man kann den Trend deutlich erkennen." → mit „-bar";Der Trend ist deutlich erkennbar.
+[Passiv] „Die Universität schaffte die Anwesenheitspflicht ab." → Passiv Präteritum;Die Anwesenheitspflicht wurde abgeschafft.
+[Passiv] „Man darf Werbung für Tabak nicht ausstrahlen." → Passiv mit Modalverb;Werbung für Tabak darf nicht ausgestrahlt werden.
+[Passiversatz] „Diese Frage kann man nicht leicht beantworten." → mit „sein + zu";Diese Frage ist nicht leicht zu beantworten.
+[Passiv] „2020 führten viele Firmen das Homeoffice ein." → Passiv;2020 wurde das Homeoffice in vielen Firmen eingeführt.
+[Passiversatz] „Man sollte Kurzstreckenflüge vermeiden." → 2 Varianten;Kurzstreckenflüge sind zu vermeiden. / Kurzstreckenflüge sollten vermieden werden.
+[Konjunktiv I] Kritiker: „Studiengebühren sind sozial ungerecht.";Kritiker meinen, Studiengebühren seien sozial ungerecht.
+[Konjunktiv I] Befürworter: „Gebühren verbessern die Qualität der Lehre.";Befürworter argumentieren, Gebühren würden die Qualität der Lehre verbessern.
+[Konjunktiv I] Die Studie: „Der Krankenstand ist deutlich gesunken.";Die Studie besagt, der Krankenstand sei deutlich gesunken.
+[Konjunktiv I] Experten: „Das Rentensystem muss reformiert werden.";Experten fordern, das Rentensystem müsse reformiert werden.
+[Konjunktiv I] Die Autorin: „Jugendliche verbringen vier Stunden täglich am Smartphone.";Die Autorin schreibt, Jugendliche verbrächten vier Stunden täglich am Smartphone.
+[Konjunktiv I] Der Bericht: „Die Zahl der E-Autos wird weiter steigen.";Dem Bericht zufolge werde die Zahl der E-Autos weiter steigen.
+[Konjunktiv I] Gegner: „Ein Tempolimit bringt nichts.";Gegner behaupten, ein Tempolimit bringe nichts.
+[Konjunktiv I] Der Minister: „Wir haben keine Alternative.";Der Minister erklärte, man habe keine Alternative.
+[Redemittel] „Die vorliegende Grafik ______ über die Höhe der Studiengebühren.";informiert
+[Redemittel] „Die Daten ______ von der OECD und ______ sich auf das Jahr 2024.";stammen · beziehen
+[Redemittel] „Die Angaben ______ in Prozent.";erfolgen
+[Redemittel] „______ ist der durchgehende Aufwärtstrend.";Auffällig
+[Redemittel] „An der Spitze ______ die USA, während Deutschland im Mittelfeld ______.";liegen · rangiert
+[Redemittel] „Zusammenfassend ______ sich festhalten, dass …";lässt
+[Redemittel] „Der Anteil ist ______ rund zehn ______ über vierzig Prozent gestiegen.";von · auf
+[Redemittel] „Ein Grund ______ könnte sein, dass die Mieten steigen.";dafür
+[Nomen-Verb] „Die Digitalisierung spielt eine wichtige ______.";Rolle
+[Nomen-Verb] „Kostenlose Werkzeuge stehen rund um die Uhr zur ______.";Verfügung
+[Verb+Präp.] „Der Prüfungserfolg hängt ______ der regelmäßigen Teilnahme ______.";von · ab
+[Verb+Präp.] „Steigende Mieten führen ______, dass mehr Studierende arbeiten müssen.";dazu
+[Verb+Präp.] „Mehrere Faktoren tragen ______ Fachkräftemangel ______.";zum · bei
+[Nomen-Verb] „Für viele Familien kommt ein Heimplatz nicht in ______.";Frage
+[Verb+Präp.] „Städte müssen Rücksicht ______ ältere Menschen ______.";auf · nehmen
+[Verb+Präp.] „Immer mehr Jugendliche setzen sich ______ die Umwelt ______.";für · ein
+[Verb+Präp.] „Viele üben Kritik ______ diesem Modell.";an
+[Nomen-Verb] „Am Ende muss die Politik eine Entscheidung ______.";treffen
+[Wortfamilie] steigen → Nomen + Adjektiv;der Anstieg · steigend
+[Wortfamilie] sinken → Nomen + Adjektiv;der Rückgang · rückläufig
+[Wortfamilie] wachsen → Nomen;das Wachstum
+[Wortfamilie] zunehmen → Nomen;die Zunahme
+[Wortfamilie] abnehmen → Nomen;die Abnahme
+[Wortfamilie] sich verdoppeln → Nomen;die Verdopplung
+[Wortfamilie] stagnieren → Nomen;die Stagnation
+[Wortfamilie] sich erhöhen → Nomen;die Erhöhung
+[Synonym C1] „ein wichtiger Punkt" → 2 C1-Wörter;entscheidend · zentral · maßgeblich
+[Synonym C1] „viele Studierende" → C1;zahlreiche · ein erheblicher Teil der Studierenden
+[Synonym C1] „ein gutes Argument" → C1;ein überzeugendes / stichhaltiges Argument
+[Synonym C1] „schlechte Folgen" → C1;problematische / nachteilige / bedenkliche Folgen
+[Synonym C1] „Die Studie sagt, dass …" → C1;belegt · zeigt auf · hebt hervor
+[Synonym C1] „ein großes Problem" → C1;eine große Herausforderung · ein gravierender Missstand
+[Synonym C1] „Die Grafik zeigt einen Trend." → C1;verdeutlicht · veranschaulicht · dokumentiert
+[Synonym C1] „sehr interessant" → C1;äußerst · überaus · besonders
