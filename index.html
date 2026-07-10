@@ -73,8 +73,10 @@
 
 <script>
 "use strict";
-const START = new Date(2026, 6, 13);            // Mo, 13.07.2026 = Beginn Woche 0
-const PRUEFUNG = new Date(2027, 0, 11);         // nominelle Prüfungswoche ab 11.01.2027
+const GEPLANT = new Date(2026, 6, 13);          // geplanter Start (Mo, Woche 0)
+let START = GEPLANT;                            // verschiebt sich auf den echten Start (Checkbox)
+let PRUEFUNG = new Date(2027, 0, 11);           // Prüfungsziel (verstellbar)
+let gestartet = null;                           // Datum des echten Kursstarts
 const K = "TestDaF-Kirill-Komplett.html#datei-";
 const TAG = 864e5;
 
@@ -163,7 +165,50 @@ const PHASEN = [
 
 const mo = d => { const x = new Date(d); x.setHours(0,0,0,0); x.setDate(x.getDate() - (x.getDay()+6)%7); return x; };
 const wochennr = d => Math.round((mo(d) - START) / (7*TAG));
-const iso = d => d.toISOString().slice(0,10);
+const iso = d => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+const plusTage = (d, n) => { const x = new Date(d); x.setDate(x.getDate() + n); return x; };
+
+// ── Plan-Zustand: echter Start & Prüfungsziel ───────────────────────────
+function initPlan() {
+  const s = localStorage.getItem("tdk-start");
+  gestartet = s ? new Date(s + "T00:00:00") : null;
+  START = gestartet ? plusTage(GEPLANT, Math.round((mo(gestartet) - GEPLANT) / (7*TAG)) * 7) : GEPLANT;
+  const e = localStorage.getItem("tdk-ende");
+  PRUEFUNG = e ? new Date(e + "T00:00:00") : plusTage(START, 26*7);
+}
+
+// Lerntage (Mo–Sa) zwischen zwei Daten, inkl. a, exkl. b
+function lerntage(a, b) {
+  let n = 0;
+  for (let d = new Date(a); d < b; d = plusTage(d, 1)) if ((d.getDay()+6)%7 !== 6) n++;
+  return n;
+}
+
+// ── Tempo: Soll/Ist bis zum C1-Stand (Sa der Woche 22) ──────────────────
+function tempo(heute) {
+  const planC1 = plusTage(START, 22*7 + 5);          // Sa W22 = C1-Arbeitsstand
+  let erwartet = 0, geschafft = 0, verbleibend = 0;
+  for (let d = new Date(gestartet); d <= planC1; d = plusTage(d, 1)) {
+    if ((d.getDay()+6)%7 === 6) continue;
+    const info = tag(d);
+    if (!info.tasks.length) continue;
+    const fertig = gelesen(d).filter(Boolean).length >= info.tasks.length;
+    if (fertig) geschafft++; else verbleibend++;
+    if (d < heute) erwartet++;
+  }
+  const rueckstand = erwartet - geschafft;            // >0 = hinterher, <0 = voraus
+  const echtC1 = plusTage(planC1, Math.round(rueckstand * 7/6));
+  let extra = 0;                                      // Aufholmodus: ab 5 Tagen Rückstand
+  if (rueckstand >= 5) {
+    const rest = Math.max(lerntage(heute, planC1), 1);
+    extra = Math.min(30, Math.max(15, Math.round(rueckstand*90/rest/5)*5));
+  }
+  // Bedarf fürs (ggf. verschobene) Prüfungsziel: Inhalt fertig 3 Wochen vor der Prüfung
+  const deadline = plusTage(PRUEFUNG, -21);
+  const verfuegbar = lerntage(heute, deadline);
+  const bedarf = verfuegbar > 0 ? Math.round(verbleibend*90/verfuegbar/5)*5 : Infinity;
+  return { rueckstand, geschafft, verbleibend, planC1, echtC1, extra, bedarf, verfuegbar };
+}
 
 // ── Tagesinhalt ──────────────────────────────────────────────────────────
 function tag(d) {
@@ -287,8 +332,42 @@ let aktuell = new Date(); aktuell.setHours(0,0,0,0);
 function render() {
   const d = aktuell, info = tag(d), app = document.getElementById("app");
   const fmt = new Intl.DateTimeFormat("de-DE", { weekday:"long", day:"numeric", month:"long", year:"numeric" });
+  const fmtK = new Intl.DateTimeFormat("de-DE", { day:"numeric", month:"short", year:"numeric" });
   const haken = gelesen(d);
-  const tageBisPruefung = Math.max(0, Math.ceil((PRUEFUNG - d) / TAG));
+  const echtHeute = new Date(); echtHeute.setHours(0,0,0,0);
+  const t = gestartet ? tempo(echtHeute) : null;
+  const tageBisPruefung = Math.max(0, Math.ceil((PRUEFUNG - echtHeute) / TAG));
+
+  let status;
+  if (!gestartet) {
+    status = `<div class="card" style="border-color:#2ca02c;">
+      <label style="display:flex;align-items:center;gap:12px;font-size:1.15rem;cursor:pointer;">
+        <input type="checkbox" id="startCb" style="width:34px;height:34px;accent-color:#2ca02c;flex:none;">
+        <span><b>▶ START</b> — heute beginne ich den Kurs!</span></label>
+      <div class="fuss" style="margin-top:8px;">Ab dem Haken zählt der Plan ab deiner echten Startwoche, und die App
+      rechnet laufend aus, ob du vor oder hinter dem Plan liegst. Geplantes Ende (C1-Stand):
+      <b>${fmtK.format(plusTage(GEPLANT, 22*7+5))}</b> · Prüfungsziel: <b>${fmtK.format(PRUEFUNG)}</b></div></div>`;
+  } else {
+    const lage = t.rueckstand > 0 ? `<b style="color:#d62728">${t.rueckstand} Lerntage zurück</b>`
+               : t.rueckstand < 0 ? `<b style="color:#2ca02c">${-t.rueckstand} Lerntage voraus</b>`
+               : `<b style="color:#2ca02c">genau im Plan</b>`;
+    const bedarfTxt = !isFinite(t.bedarf) ? "Termin zu knapp — Inhalt passt nicht mehr hinein"
+      : t.bedarf > 150 ? `<b>${t.bedarf} Min./Tag</b> — kaum realistisch, Termin besser verschieben`
+      : t.bedarf > 120 ? `<b>${t.bedarf} Min./Tag</b> — sehr sportlich`
+      : t.bedarf >= 60 ? `<b>${t.bedarf} Min./Tag</b> — gut machbar`
+      : `<b>${Math.max(t.bedarf,0)} Min./Tag</b> — entspannt`;
+    status = `<div class="card"><h3>📈 Plan-Status</h3>
+      <div>Stand: ${lage} · geschafft: ${t.geschafft} von ${t.geschafft + t.verbleibend} Lerntagen</div>
+      <div>Geplantes Ende (C1-Stand): <b>${fmtK.format(t.planC1)}</b> · bei deinem echten Tempo: <b>${fmtK.format(t.echtC1)}</b></div>
+      <div style="margin-top:6px;">🎯 Prüfungsziel: <b>${fmtK.format(PRUEFUNG)}</b> (noch ${tageBisPruefung} Tage) —
+        dafür nötig bei 6 Tagen/Woche: ${bedarfTxt} <span class="fuss">(Inhalt fertig 3 Wochen vor der Prüfung)</span></div>
+      <div style="margin-top:8px;"><label>Prüfungstermin verschieben:
+        <input type="date" id="zielDatum" value="${iso(PRUEFUNG)}"></label>
+        <a href="#" id="planReset" style="margin-left:10px;font-size:.85rem;">Start zurücksetzen</a></div></div>`;
+  }
+  const aufhol = t && t.extra ? `<div class="hinweis">⏱️ <b>Aufholmodus aktiv:</b> Du liegst ${t.rueckstand} Lerntage
+    hinter dem Plan. Der Plan schaltet auf <b>90 + ${t.extra} Minuten pro Tag</b>, bis du aufgeholt hast.
+    Nutze die Extra-Zeit für die verpassten Tage (mit ← zurückblättern) — zuerst die Di-Aufsätze und Do-Sprechrunden.</div>` : "";
 
   let woche = "";
   if (info.w >= 0 && info.w <= 27) {
@@ -316,10 +395,12 @@ function render() {
     <div class="datum">${fmt.format(d)}</div>
     <span class="chip" style="background:${info.phase.farbe}">${info.phase.name}</span>
     ${info.w >= 0 && info.w <= 27 ? `<span class="chip" style="background:#556">Woche ${info.w}</span>` : ""}
-    <div class="meta">Prüfung: Januar 2027${tageBisPruefung ? ` · noch ~${tageBisPruefung} Tage` : ""} · Ziel: TDN 5</div>
+    <div class="meta">Prüfung: ${fmtK.format(PRUEFUNG)}${tageBisPruefung ? ` · noch ${tageBisPruefung} Tage` : ""} · Ziel: TDN 5</div>
+    ${status}
+    ${aufhol}
     ${woche}
     ${info.notizen.map(n => `<div class="hinweis">${n}</div>`).join("")}
-    ${tasksHtml ? `<div class="card"><h3>Heute (90 Minuten)</h3>${tasksHtml}
+    ${tasksHtml ? `<div class="card"><h3>Heute (${t && t.extra ? `90 + ${t.extra} Min. — Aufholmodus` : "90 Minuten"})</h3>${tasksHtml}
       <div class="balken"><div style="width:${alle ? 100*done/alle : 0}%"></div></div></div>` : ""}
     ${revHtml ? `<div class="card"><h3>🔁 Wiederholung (Spaced Repetition)</h3>${revHtml}
       <div class="fuss" style="margin-top:8px;">Gelerntes kommt automatisch nach 1, 3 und 7 Wochen zurück — kurz, aber aus dem Gedächtnis.</div></div>` : ""}
@@ -338,11 +419,29 @@ function render() {
   app.querySelectorAll("[data-tag]").forEach(el => el.addEventListener("click", e => {
     e.preventDefault(); aktuell = new Date(el.dataset.tag + "T00:00:00"); render();
   }));
+  const startCb = document.getElementById("startCb");
+  if (startCb) startCb.addEventListener("change", () => {
+    if (!startCb.checked) return;
+    localStorage.setItem("tdk-start", iso(echtHeute));
+    initPlan(); aktuell = new Date(echtHeute); render();
+  });
+  const ziel = document.getElementById("zielDatum");
+  if (ziel) ziel.addEventListener("change", () => {
+    if (ziel.value) { localStorage.setItem("tdk-ende", ziel.value); initPlan(); render(); }
+  });
+  const reset = document.getElementById("planReset");
+  if (reset) reset.addEventListener("click", e => {
+    e.preventDefault();
+    if (confirm("Start und Prüfungsziel zurücksetzen? (Deine Haken bleiben erhalten.)")) {
+      localStorage.removeItem("tdk-start"); localStorage.removeItem("tdk-ende"); initPlan(); render();
+    }
+  });
 }
 
 document.getElementById("zurueck").onclick = () => { aktuell.setDate(aktuell.getDate()-1); render(); };
 document.getElementById("vor").onclick     = () => { aktuell.setDate(aktuell.getDate()+1); render(); };
 document.getElementById("heuteBtn").onclick = () => { aktuell = new Date(); aktuell.setHours(0,0,0,0); render(); };
+initPlan();
 render();
 </script>
 </body>
