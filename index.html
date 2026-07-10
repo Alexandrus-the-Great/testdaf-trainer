@@ -46,6 +46,10 @@
   .woche a.aktiv { border-color:var(--blau); font-weight:700; color:var(--blau); }
   .woche a.voll { background:rgba(44,160,44,.18); border-color:#2ca02c; }
   .woche a.teil { background:rgba(255,160,0,.15); }
+  details.mat { margin-top:6px; }
+  details.mat summary { cursor:pointer; color:var(--blau); font-size:.9rem; font-weight:600; }
+  details.mat > div { font-size:.92rem; background:var(--hell); border:1px solid var(--rand);
+                      border-radius:10px; padding:10px 12px; margin-top:6px; }
   details.ueb { border-top:1px solid var(--rand); padding:8px 0; }
   details.ueb:first-of-type { border-top:none; }
   details.ueb summary { cursor:pointer; }
@@ -129,6 +133,36 @@ const P3_KALT = {
 };
 const P3_THEMEN = ["Organspende","Zoos","Bargeldabschaffung","Massentourismus","Noten in der Schule","Werbung für Kinder"];
 const P4_KALT = { 19:["thema-41-flug-bahn.svg","Flug vs. Bahn"], 20:["thema-45-e-auto.svg","E-Auto-Zulassungen"] };
+
+// ── Material-Bibliothek: klappt unter jeder Aufgabe auf ─────────────────
+const MAT = {
+  schablone: `<b>Aufbau (6 Absätze):</b> Einleitung → Grafik → Pro → Contra → Meinung + Heimatland → Schluss.<br>
+<b>Einleitung:</b> „Ob …, wird seit Langem kontrovers diskutiert." · „Im Folgenden werde ich zunächst die Grafik beschreiben, anschließend Argumente abwägen und abschließend meine Position darlegen."<br>
+<b>Argumente:</b> „Die Befürworter führen ins Feld, dass …" · „Darüber hinaus wird angeführt, dass …" · „Die Gegner wenden dagegen ein, dass …" · „Kritiker befürchten, dass …" (Konjunktiv I!)<br>
+<b>Meinung:</b> „Ausschlaggebend ist für mich das Argument, dass …" · „Allerdings sollte man einräumen, dass …" · „In meinem Heimatland ist die Situation ähnlich/anders: …"<br>
+<b>Schluss:</b> „Zusammenfassend lässt sich festhalten, dass …"<br>
+<b>Zeitplan 60′:</b> 0–5 Skelett · 5–15 Einleitung + Grafik · 15–40 Pro/Contra/Meinung/Heimatland · 40–48 Schluss · 48–60 Korrektur.<br>
+<b>Argument-Baukasten für neue Themen:</b> Geld · Gerechtigkeit · Qualität · Gesundheit/Umwelt · Freiheit · Gesellschaft.`,
+  checkliste: `☐ Verb an Position 2 / am Ende nach dass, weil, obwohl?<br>☐ Nach „deshalb/trotzdem/außerdem" sofort das Verb?<br>☐ Adjektivendungen (die steigend<b>en</b> Kosten)?<br>☐ aufgrund/trotz/wegen + <b>Genitiv</b>?<br>☐ Verben mit fester Präposition (abhängen <b>von</b>, führen <b>zu</b>)?<br>☐ Jedes Argument mit Begründung oder Beispiel?<br>☐ Wortwiederholungen ersetzt (wichtig → entscheidend/zentral)?<br>☐ ALLE Aufgabenpunkte behandelt (Grafik? Positionen? Meinung? <b>Heimatland?</b>)?<br>☐ Keine Umgangssprache?`,
+  hoeren: `<b>Notizen-Raster:</b> 2 Spalten — links WER (Sprecher), rechts WAS (Kernaussage, Zahl). Abkürzungen: ↑ steigt · ↓ sinkt · D = Deutschland.<br><b>Quellen:</b> <a href="https://learngerman.dw.com/de/langsam-gesprochene-nachrichten/s-42184963" target="_blank">DW Langsame Nachrichten</a> (Einstieg) · Deutschlandfunk „Forschung aktuell" · Terra X (YouTube).<br><b>Regel:</b> Verpasste Antwort sofort loslassen — Kreuz setzen, weiter. Komplette Taktik: ${datei("24")}.`,
+  lesen: `<b>Taktik:</b> Erst die Aufgaben lesen, dann den Text · Zeitbudget pro Leseteil hart deckeln · „Text sagt dazu nichts" = kein Beleg IM TEXT (Weltwissen ist die Falle!) · am Ende nichts leer lassen — Raten kostet nichts.<br><b>Quellen:</b> Zeit · Spiegel · FAZ Wissen — pro Artikel 3 eigene Ja/Nein/„sagt nichts"-Aussagen formulieren. Komplett: ${datei("24")}.`,
+  sprechen7: `<b>Die 7 Aufgaben:</b> 1 Auskunft (Sie) · 2 Heimatland (du) · 3 <b>Grafik</b> (Sie) · 4 <b>Stellungnahme</b> (Sie, 90 Sek. — Königsaufgabe) · 5 Rat geben (du) · 6 <b>Hypothesen</b> (Sie) · 7 Empfehlung (du).<br><b>Aufgabe 4 in 90 Sek.:</b> 1 Satz Einstieg → 1–2 Pro → 1–2 Contra → Meinung mit Grund → 1 Satz Fazit.<br><b>Aufgabe 6:</b> „Ein Grund dafür könnte sein, dass …" · „Wenn sich dieser Trend fortsetzt, dürfte …"<br><b>Regeln:</b> Vorbereitungszeit = 3 Stichworte, NIE ganze Sätze · Register beachten (du/Sie wird bewertet!) · Sprechzeit ausfüllen. Musterantworten: ${datei("16")}.`,
+  redemittel: `<b>Auskunft:</b> „Ich rufe an, weil …" · „Könnten Sie mir sagen, ob …?" · „Mich würde außerdem interessieren, …"<br><b>Grafik:</b> „Die Grafik zeigt, wie sich … entwickelt hat." · „Besonders auffällig ist, dass …" · „Zusammenfassend kann man sagen, dass …"<br><b>Stellungnahme:</b> „Einerseits spricht für …, dass … Andererseits darf man nicht übersehen, dass …" · „Ich persönlich bin der Meinung, dass …, und zwar aus folgendem Grund: …" · „Deshalb plädiere ich dafür, …"<br><b>Rat (du):</b> „An deiner Stelle würde ich …" · „Ich würde dir raten, …, weil …"<br><b>Hypothese:</b> „Das lässt sich vermutlich darauf zurückführen, dass …" · „Es ist anzunehmen, dass …"`,
+  wortschatz: `<b>So läuft der Slot:</b> 1) Übungsblock unten lösen (10′) · 2) Wortschatz aktiv: 10 neue Wörter/Wendungen als Anki-Karten — immer als ganzer Satz, nie isoliert („die Kluft zwischen Arm und Reich wächst") · 3) Fehlertagebuch: 5 alte Fehler noch einmal richtig schreiben.<br><b>C1-Quellen:</b> Kernsätze-Deck (Fuß der Seite) · Zahlensprache (${datei("15")}) · Synonym-Modul (${datei("22")}).`,
+  pruefungstag: `<b>Wie in der echten Prüfung:</b> alle 4 Teile am Stück mit Original-Pausen · Schreiben tippen · Sprechen mit Headset aufnehmen.<br><b>Prüfungstag-Checkliste:</b> Headset-/Mikrofontest ernst nehmen · Instruktionsseiten als Mini-Pausen nutzen · jede Aufgabe gleich ernst nehmen (unbewertete Erprobungsaufgaben sind nicht erkennbar) — komplett in ${datei("24")}.`,
+  grafik: `<b>Die 5 Schritte:</b> 1 „Die vorliegende Grafik informiert über …" · 2 „Die Daten stammen von … und beziehen sich auf …; die Angaben erfolgen in Prozent." · 3 „Auffällig ist, dass …" · 4 ein bis zwei Details mit Zahlen („Während … bei … liegt, beträgt … lediglich …") · 5 „Zusammenfassend lässt sich … erkennen."<br><b>Zahlensprache:</b> knapp/gut 40 % · ein Drittel · jeder Zweite · sich verdoppeln · rückläufig sein · stagnieren · doppelt so hoch wie · an der Spitze liegen / das Schlusslicht bilden.<br><b>Todsünden:</b> alle Zahlen aufzählen · interpretieren statt beschreiben · die Einheit vergessen. Komplett: ${datei("15")}.`,
+  zsf: `<b>Bauplan Zusammenfassung:</b> 1 Satz Thema („Der vorliegende Text thematisiert …") → 3–5 Hauptaussagen in eigenen Worten mit Konjunktiv I („Der Autor betont, es gebe …") → Schlusssatz („Abschließend plädiert der Autor für …").<br><b>Verboten:</b> eigene Meinung · abgeschriebene Sätze · Beispiele und Zahlenreihen des Originals.<br><b>25 Min.:</b> 0–6 lesen + Randnotizen · 6–9 Hauptaussagen wählen · 9–21 schreiben · 21–25 Korrektur. 8 Übungstexte mit Mustern: ${datei("23")}.`,
+};
+const KERNSAETZE = {
+  5:["Der Zugang zur Bildung darf nicht vom Einkommen der Eltern abhängen.","Gebühren schrecken junge Menschen aus einkommensschwachen Familien ab und verschärfen die soziale Ungleichheit.","Bildung ist ein öffentliches Gut, von dem die gesamte Gesellschaft profitiert.","Studierende, die für ihre Ausbildung zahlen, schließen ihr Studium zielstrebiger ab.","Moderate Beiträge halte ich nur dann für vertretbar, wenn sie sozial abgefedert werden.","Zusätzliche Einnahmen ermöglichen es den Universitäten, die Qualität der Lehre zu verbessern."],
+  6:["Vorlesungen lassen sich jederzeit und überall abrufen, was die Vereinbarkeit von Studium und Nebenjob erleichtert.","Beim reinen Online-Studium bleibt der persönliche Austausch auf der Strecke.","Das Lernen am Bildschirm erfordert ein hohes Maß an Selbstdisziplin.","Die Universität ist mehr als reine Wissensvermittlung: Sie ist ein Ort der Begegnung.","Junge Menschen aus ländlichen Regionen erhalten Zugang zu Angeboten, die ihnen sonst verschlossen blieben.","Hybride Modelle verbinden die Stärken beider Welten."],
+  7:["Die Sprache muss im Alltag ständig angewendet werden — das verbessert die Kenntnisse wie kaum ein anderes Lernformat.","Interkulturelle Kompetenz und Selbstständigkeit werden von Arbeitgebern hoch geschätzt.","Im Ausland erbrachte Leistungen werden häufig nicht anerkannt, wodurch sich das Studium verlängert.","Die persönliche Reifung ist durch keine Vorlesung zu ersetzen.","Ein Auslandsaufenthalt verursacht erhebliche Kosten, die sich nicht jede Familie leisten kann.","Diese Erfahrung darf nicht vom Geldbeutel der Eltern abhängen."],
+  8:["Weniger Verkehr verbessert die Luftqualität, was der Gesundheit aller Bewohner zugutekommt.","Wo früher Parkplätze waren, entstehen Grünflächen und Raum für Fußgänger.","Der Einzelhandel befürchtet Umsatzeinbußen, wenn die Kunden die Geschäfte nicht mehr mit dem Auto erreichen.","Ältere Menschen und Pendler sind auf das Auto angewiesen, solange der Nahverkehr nicht ausgebaut ist.","Saubere Luft ist ein Grundbedürfnis, das schwerer wiegt als die Bequemlichkeit des Autofahrens.","Die Einführung autofreier Zonen setzt einen leistungsfähigen Nahverkehr voraus."],
+  9:["Die gläserne Decke lässt sich ohne gesetzlichen Druck nicht durchbrechen.","Freiwillige Selbstverpflichtungen haben jahrzehntelang kaum etwas verändert.","Weibliche Führungskräfte wirken als Vorbilder und ermutigen junge Frauen, Verantwortung zu übernehmen.","Allein die Qualifikation sollte über eine Beförderung entscheiden, nicht das Geschlecht.","Eine Quote bekämpft nur die Symptome, während die eigentlichen Ursachen bestehen bleiben.","Studien belegen, dass gemischte Teams bessere Entscheidungen treffen."],
+  10:["Miete und Verpflegung entfallen, sodass weniger Nebenarbeit nötig ist und mehr Zeit für das Studium bleibt.","Der Auszug ist ein entscheidender Schritt zur Selbstständigkeit.","Wer nie gelernt hat, einen eigenen Haushalt zu führen, wird es auch später schwer haben.","Unterschiedliche Lebensrhythmen führen häufig zu Konflikten.","Das Studium ist die ideale Zeit, um auf eigenen Beinen stehen zu lernen.","Eine Wohngemeinschaft ist ein guter Mittelweg zwischen Unabhängigkeit und bezahlbaren Kosten."],
+  11:["Englisch ist die internationale Wissenschaftssprache.","Die Qualität der Lehre leidet, wenn beide Seiten die Fremdsprache nur unvollkommen beherrschen.","Inhalte werden vereinfacht, Diskussionen verflachen.","Die Landessprache verarmt als Wissenschaftssprache, wenn neue Fachbegriffe nur noch auf Englisch entstehen.","Ein solides Fundament wird am besten in der Sprache gelegt, die man am sichersten beherrscht.","Englischsprachige Programme ziehen qualifizierte Studierende aus aller Welt an."],
+  12:["Ein Nebenjob schafft finanzielle Unabhängigkeit und schützt vor Verschuldung.","Berufserfahrung und Kontakte erleichtern den späteren Berufseinstieg.","Wer mehr als fünfzehn Stunden pro Woche arbeitet, erzielt schlechtere Noten.","Fachfremde Aushilfsjobs bringen für die spätere Karriere kaum etwas.","Das Studium muss Vorrang behalten.","Arbeiten sollte eine freie Entscheidung bleiben und keine Notwendigkeit."],
+};
 
 // ── Übungsblock: Grammatik & Wortschatz aus unseren Texten (Datei 22) ───
 const UEB = {
@@ -353,19 +387,19 @@ function tag(d) {
     if (w <= 24) {
       r.tasks = [
         { z:"15′", t:"Anki", x:"Kernsätze + Fehlertagebuch" },
-        { z:"15′", t:"1 Sprechaufgabe aufnehmen", x:"Muster in " + datei("16") },
-        { z:"15′", t:"Jeden 2. Tag: eine Grafikbeschreibung", x:"Grafik aus " + datei("21") + " ziehen" },
+        { z:"15′", t:"1 Sprechaufgabe aufnehmen", x:"Muster in " + datei("16"), m: MAT.redemittel },
+        { z:"15′", t:"Jeden 2. Tag: eine Grafikbeschreibung", x:"Grafik aus " + datei("21") + " ziehen", m: MAT.grafik },
       ];
       r.notizen.push("Feiertage = lockerer Erhaltungsmodus (30–45 Min. täglich). Kein schlechtes Gewissen!");
       r.tasks = r.tasks.concat(wiederholungen(w, wd));
       r.uebungen = uebungsblock(w, d);
     } else if (w === 25) {
       r.tasks = wd === 0
-        ? [{ z:"", t:"Letzter kompletter Modelltest", x:"alle 4 Teile, mit Prüfungspausen — diese Woche einmal, danach nur noch Wiederholung" }]
+        ? [{ z:"", t:"Letzter kompletter Modelltest", x:"alle 4 Teile, mit Prüfungspausen — diese Woche einmal, danach nur noch Wiederholung", m: MAT.pruefungstag }]
         : [
-        { z:"30′", t:"Skelette & Kernsätze wiederholen", x:"keine neuen Materialien mehr!" },
-        { z:"30′", t:"1–2 Sprechaufgaben", x:"Flüssigkeit vor Perfektion" },
-        { z:"30′", t:"Redemittel laut sprechen", x:datei("03") + " + " + datei("04") },
+        { z:"30′", t:"Skelette & Kernsätze wiederholen", x:"keine neuen Materialien mehr!", m: MAT.schablone },
+        { z:"30′", t:"1–2 Sprechaufgaben", x:"Flüssigkeit vor Perfektion", m: MAT.sprechen7 },
+        { z:"30′", t:"Redemittel laut sprechen", x:datei("03") + " + " + datei("04"), m: MAT.redemittel },
       ];
     } else {
       r.tasks = [
@@ -407,15 +441,23 @@ function tag(d) {
   else if (w <= 18) sa = (w % 2 ? "<b>Halber Modelltest: Lesen + Hören</b> mit Timer und Pausenregime" : "<b>Halber Modelltest: Schreiben + Sprechen</b> mit Timer") + " · danach 2 alte Aufsätze aus dem Gedächtnis in je <b>40 Min.</b> (Tempo!)";
   else              sa = (w === 19 || w === 21) ? "<b>Kompletter Modelltest</b>: alle 4 Teile an einem Tag, Pausen wie in der Prüfung" : "Fehlertagebuch-Drill + 2 Skelette reproduzieren (40 Min.)";
 
+  // Digitales Schreiben: in Phase 3 jeder zweite Dienstag = Zusammenfassung + Stellungnahme (getippt)
+  const digitalDi = w >= 13 && w <= 18 && w % 2 === 0;
+  const diTask = digitalDi
+    ? { z:"60′", t:"Schreiben digital (wie in der Prüfung)", x:`<b>Aufgabe 1:</b> Zusammenfassung (25′, nächster Übungstext aus ${datei("23")}) + <b>Aufgabe 2:</b> Stellungnahme (30′, Sprechkarte aus ${datei("14")} als Thema). Beides <b>tippen</b>, nicht schreiben!`, m: MAT.zsf }
+    : { z:"60′", t:"Schreiben", x:di, m: w <= 1 ? MAT.grafik : MAT.schablone };
+  const ksMat = p2 ? "<b>Die 6 Kernsätze der Woche:</b><br>" + KERNSAETZE[w].map((s,i) => `${i+1}. ${s}`).join("<br>") : null;
+
   const TAGE = [
-    [ { z:"60′", t:"Wortschatz & Grammatik", x:mo_ }, { z:"30′", t:"Anki-Wiederholung", x:"Decks „TestDaF“ + „Meine Fehler“" } ],
-    [ { z:"60′", t:"Schreiben", x:di }, { z:"30′", t:"Selbstcheck + Korrektur organisieren", x:"Fehler-Checkliste in " + datei("03") + "; Text an Tutor/KI schicken" } ],
-    [ { z:"45′", t:"Hören", x:"Übungstest, DW oder Podcast — mit Notizen wie in der Prüfung" }, { z:"45′", t:"Redemittel Sprechen", x:"laut lernen (nicht lesen — sprechen!): " + datei("04") } ],
-    [ { z:"60′", t:"Sprechen", x:do_ }, { z:"30′", t:"Anhören & verbessern", x:"Aufnahme anhören, 2–3 Antworten verbessert neu aufnehmen" } ],
-    [ { z:"45′", t:"Lesen", x:"Übungstest oder Zeitungsartikel (Zeit/Spiegel/FAZ Wissen)" }, { z:"45′", t:"Di-Text überarbeiten", x:"Korrigierte Fassung durcharbeiten; jeden Fehler als Anki-Karte: falscher Satz → richtiger Satz" + (p2 ? `. Jetzt den Musteraufsatz vergleichen (${datei(p2.essay)}, Nr. ${p2.nr}) und die 6 Kernsätze lernen` : "") } ],
-    [ { z:"60′", t:"Reproduktion", x:sa }, { z:"30′", t:"Reservezeit", x:"in den schwächsten Teil laut Diagnose (Woche 0) stecken" } ],
+    [ { z:"60′", t:"Wortschatz & Grammatik", x:mo_, m: ksMat || MAT.wortschatz }, { z:"30′", t:"Anki-Wiederholung", x:"Decks „TestDaF“ + „Meine Fehler“ — beide CSV-Dateien unten im Fuß herunterladen" } ],
+    [ diTask, { z:"30′", t:"Selbstcheck + Korrektur organisieren", x:"Checkliste aufklappen und Punkt für Punkt durchgehen; Text an Tutor/KI schicken (Prüf-Prompt in " + datei("03") + ")", m: MAT.checkliste } ],
+    [ { z:"45′", t:"Hören", x:"Übungstest, DW oder Podcast — mit Notizen wie in der Prüfung", m: MAT.hoeren }, { z:"45′", t:"Redemittel Sprechen", x:"laut lernen (nicht lesen — sprechen!)", m: MAT.redemittel } ],
+    [ { z:"60′", t:"Sprechen", x:do_, m: MAT.sprechen7 }, { z:"30′", t:"Anhören & verbessern", x:"Aufnahme anhören, 2–3 Antworten verbessert neu aufnehmen", m: MAT.redemittel } ],
+    [ { z:"45′", t:"Lesen", x:"Übungstest oder Zeitungsartikel", m: MAT.lesen }, { z:"45′", t:"Di-Text überarbeiten", x:"Korrigierte Fassung durcharbeiten; jeden Fehler als Anki-Karte: falscher Satz → richtiger Satz" + (p2 ? `. Jetzt den Musteraufsatz vergleichen (${datei(p2.essay)}, Nr. ${p2.nr}) und die 6 Kernsätze lernen` : ""), m: MAT.checkliste } ],
+    [ { z:"60′", t:"Reproduktion", x:sa, m: ksMat || MAT.schablone }, { z:"30′", t:"Reservezeit", x:"in den schwächsten Teil laut Diagnose (Woche 0) stecken" } ],
   ];
   r.tasks = TAGE[wd].concat(wiederholungen(w, wd));
+  if (w <= 4 && wd === 2) r.tasks.push({ z:"10′", t:"⌨️ Tipp-Training (deutsches QWERTZ)", x:`<a href="https://www.keybr.com" target="_blank">keybr.com</a> oder <a href="https://www.typing.com" target="_blank">typing.com</a>, Layout Deutsch — Ziel 25 Wörter/Min. (${datei("24")})` });
   r.tasks.push({ z:"10′", t:"✏️ Übungsblock: Grammatik & Wortschatz", x:"4 Aufgaben im Kasten unten — erst selbst lösen, dann Lösung aufklappen. Alle Übungen: " + datei("22") });
   r.uebungen = uebungsblock(w, d);
   if (wd === 1 && diImg) r.extra = diImg;
@@ -488,7 +530,8 @@ function render() {
     <div class="task ${haken[i] ? "done" : ""}">
       <input type="checkbox" data-i="${i}" ${haken[i] ? "checked" : ""}>
       ${t.z ? `<span class="zeit">${t.z}</span>` : ""}
-      <span class="tx" data-i="${i}"><b class="tt">${t.t}</b>${t.x}</span>
+      <span><span class="tx" data-i="${i}"><b class="tt">${t.t}</b>${t.x}</span>
+      ${t.m ? `<details class="mat"><summary>▸ Material & Spickzettel</summary><div>${t.m}</div></details>` : ""}</span>
     </div>`;
   const tasksHtml = info.tasks.map((t,i) => t.rev ? "" : zeile(t,i)).join("");
   const revHtml   = info.tasks.map((t,i) => t.rev ? zeile(t,i) : "").join("");
