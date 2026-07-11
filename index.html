@@ -509,50 +509,61 @@ function lueckentext(w) {
 // Überall, wo ein Spickzettel Redemittel nur als „…“-Gerüst zeigt, folgen
 // komplette C1-Beispielsätze aus unseren Themen; {Wort} = Lücke zum Antippen.
 const lz = t => t.replace(/\{([^}]+)\}/g, (m, wort) => `<span class="lk" data-l="${wort}" onclick="lkToggle(this)">______</span>`);
+// Jeder Eintrag: [Satzbau-Aufgabe (Redemittel-Anfang + Stichworte), voller Satz mit {Lücken}]
 const BSP = {
   schablone: [
-    `Ob ein generelles Tempolimit sinnvoll ist, wird seit Langem kontrovers {diskutiert}.`,
-    `Die Befürworter führen ins {Feld}, dass ein Tempolimit die Zahl schwerer Unfälle deutlich {senken} würde.`,
-    `Darüber hinaus wird {angeführt}, dass zusätzliche Einnahmen der Qualität der Lehre {zugutekommen}.`,
-    `Die Gegner wenden dagegen {ein}, dass eine Steuer einkommensschwache Haushalte überproportional {belaste} (Konjunktiv I!).`,
-    `Kritiker {befürchten}, unmotivierte Pflichtkräfte könnten die Qualität der Betreuung {verschlechtern}.`,
-    `Ausschlaggebend ist für mich das {Argument}, dass der Zugang zur Bildung nicht vom Einkommen der Eltern {abhängen} darf.`,
-    `Allerdings sollte man {einräumen}, dass ein Verbot allein das Problem nicht {löst}.`,
-    `In meinem Heimatland ist die {Situation} ähnlich: Auch dort {steigen} die Mieten seit Jahren.`,
-    `Zusammenfassend lässt sich {festhalten}, dass die Vorteile die Nachteile {überwiegen}.`],
+    [`Ob …, wird seit Langem kontrovers diskutiert <i>(Tempolimit)</i>`, `Ob ein generelles Tempolimit sinnvoll ist, wird seit Langem kontrovers {diskutiert}.`],
+    [`Die Befürworter führen ins Feld, dass … <i>(Tempolimit · schwere Unfälle · senken)</i>`, `Die Befürworter führen ins {Feld}, dass ein Tempolimit die Zahl schwerer Unfälle deutlich {senken} würde.`],
+    [`Darüber hinaus wird angeführt, dass … <i>(Einnahmen · Qualität der Lehre)</i>`, `Darüber hinaus wird {angeführt}, dass zusätzliche Einnahmen der Qualität der Lehre {zugutekommen}.`],
+    [`Die Gegner wenden dagegen ein, dass … <i>(Steuer · einkommensschwache Haushalte — Konjunktiv I!)</i>`, `Die Gegner wenden dagegen {ein}, dass eine Steuer einkommensschwache Haushalte überproportional {belaste}.`],
+    [`Kritiker befürchten, … <i>(unmotivierte Pflichtkräfte · Betreuung — Konjunktiv II!)</i>`, `Kritiker {befürchten}, unmotivierte Pflichtkräfte könnten die Qualität der Betreuung {verschlechtern}.`],
+    [`Ausschlaggebend ist für mich das Argument, dass … <i>(Zugang zur Bildung · Einkommen der Eltern)</i>`, `Ausschlaggebend ist für mich das {Argument}, dass der Zugang zur Bildung nicht vom Einkommen der Eltern {abhängen} darf.`],
+    [`Allerdings sollte man einräumen, dass … <i>(Verbot allein · Problem)</i>`, `Allerdings sollte man {einräumen}, dass ein Verbot allein das Problem nicht {löst}.`],
+    [`In meinem Heimatland ist die Situation … <i>(ähnlich · Mieten)</i>`, `In meinem Heimatland ist die {Situation} ähnlich: Auch dort {steigen} die Mieten seit Jahren.`],
+    [`Zusammenfassend lässt sich festhalten, dass … <i>(Vorteile · Nachteile)</i>`, `Zusammenfassend lässt sich {festhalten}, dass die Vorteile die Nachteile {überwiegen}.`]],
   redemittel: [
-    `Ich rufe an, {weil} ich mich nach dem Sprachkurs erkundigen {möchte}.`,
-    `Könnten Sie mir sagen, {ob} es noch freie Plätze {gibt}?`,
-    `Mich würde außerdem {interessieren}, wie hoch die Gebühren {ausfallen}.`,
-    `Die Grafik zeigt, wie sich der Fleischkonsum in Deutschland {entwickelt} hat.`,
-    `Einerseits {spricht} für die Quote, dass gemischte Teams bessere Entscheidungen {treffen}; andererseits darf man nicht {übersehen}, dass allein die Qualifikation {entscheiden} sollte.`,
-    `Deshalb {plädiere} ich dafür, die Freiwilligendienste {auszubauen}.`,
-    `An deiner {Stelle} würde ich den Nebenjob {reduzieren} — das Studium hat {Vorrang}.`,
-    `Das lässt sich vermutlich darauf {zurückführen}, dass die Mieten stark {gestiegen} sind.`,
-    `Es ist {anzunehmen}, dass sich dieser Trend in den kommenden Jahren {fortsetzt}.`],
+    [`Ich rufe an, weil … <i>(Sprachkurs · sich erkundigen)</i>`, `Ich rufe an, {weil} ich mich nach dem Sprachkurs erkundigen {möchte}.`],
+    [`Könnten Sie mir sagen, ob …? <i>(freie Plätze)</i>`, `Könnten Sie mir sagen, {ob} es noch freie Plätze {gibt}?`],
+    [`Mich würde außerdem interessieren, … <i>(Gebühren)</i>`, `Mich würde außerdem {interessieren}, wie hoch die Gebühren {ausfallen}.`],
+    [`Die Grafik zeigt, wie sich … entwickelt hat <i>(Fleischkonsum)</i>`, `Die Grafik zeigt, wie sich der Fleischkonsum in Deutschland {entwickelt} hat.`],
+    [`Einerseits spricht für …, dass …; andererseits darf man nicht übersehen, dass … <i>(Quote · gemischte Teams · Qualifikation)</i>`, `Einerseits {spricht} für die Quote, dass gemischte Teams bessere Entscheidungen {treffen}; andererseits darf man nicht {übersehen}, dass allein die Qualifikation {entscheiden} sollte.`],
+    [`Deshalb plädiere ich dafür, … <i>(Freiwilligendienste · ausbauen)</i>`, `Deshalb {plädiere} ich dafür, die Freiwilligendienste {auszubauen}.`],
+    [`An deiner Stelle würde ich … <i>(Nebenjob · Studium · Vorrang)</i>`, `An deiner {Stelle} würde ich den Nebenjob {reduzieren} — das Studium hat {Vorrang}.`],
+    [`Das lässt sich vermutlich darauf zurückführen, dass … <i>(Mieten · gestiegen)</i>`, `Das lässt sich vermutlich darauf {zurückführen}, dass die Mieten stark {gestiegen} sind.`],
+    [`Es ist anzunehmen, dass … <i>(Trend · sich fortsetzen)</i>`, `Es ist {anzunehmen}, dass sich dieser Trend in den kommenden Jahren {fortsetzt}.`]],
   grafik: [
-    `Die vorliegende Grafik {informiert} über die Entwicklung der Studierendenzahlen in Deutschland.`,
-    `Die Daten {stammen} vom Statistischen Bundesamt und {beziehen} sich auf die Jahre 2010 bis 2024; die Angaben {erfolgen} in Prozent.`,
-    `Auffällig ist, {dass} sich der Anteil der E-Autos nahezu {verdoppelt} hat.`,
-    `Während der Anteil 2010 bei knapp zehn Prozent {lag}, {beträgt} er heute gut vierzig Prozent.`,
-    `An der Spitze {liegt} Norwegen, während Deutschland das Schlusslicht {bildet}.`,
-    `Zusammenfassend lässt sich ein durchgehender {Aufwärtstrend} erkennen.`],
+    [`Die vorliegende Grafik informiert über … <i>(Studierendenzahlen)</i>`, `Die vorliegende Grafik {informiert} über die Entwicklung der Studierendenzahlen in Deutschland.`],
+    [`Die Daten stammen von … und beziehen sich auf … <i>(Statistisches Bundesamt · 2010–2024 · Prozent)</i>`, `Die Daten {stammen} vom Statistischen Bundesamt und {beziehen} sich auf die Jahre 2010 bis 2024; die Angaben {erfolgen} in Prozent.`],
+    [`Auffällig ist, dass … <i>(Anteil der E-Autos · sich verdoppeln)</i>`, `Auffällig ist, {dass} sich der Anteil der E-Autos nahezu {verdoppelt} hat.`],
+    [`Während … lag, beträgt … <i>(2010 knapp 10 % · heute gut 40 %)</i>`, `Während der Anteil 2010 bei knapp zehn Prozent {lag}, {beträgt} er heute gut vierzig Prozent.`],
+    [`An der Spitze liegt …, während … <i>(Norwegen · Deutschland · Schlusslicht)</i>`, `An der Spitze {liegt} Norwegen, während Deutschland das Schlusslicht {bildet}.`],
+    [`Zusammenfassend lässt sich … erkennen <i>(Aufwärtstrend)</i>`, `Zusammenfassend lässt sich ein durchgehender {Aufwärtstrend} erkennen.`]],
   sprechen7: [
-    `Zu dieser Frage gibt es unterschiedliche {Meinungen}: Einerseits {entlastet} ein Pflichtjahr die sozialen Berufe, andererseits {greift} es tief in die Lebensplanung junger Menschen {ein}.`,
-    `Ich persönlich bin der {Meinung}, dass die Vorteile {überwiegen}, und zwar aus folgendem {Grund}: Saubere Luft ist ein Grundbedürfnis.`,
-    `Ein Grund für den Anstieg {könnte} sein, dass das Homeoffice viele Fahrten überflüssig {macht}.`,
-    `Wenn sich dieser Trend {fortsetzt}, {dürfte} der Anteil weiter steigen.`,
-    `Abschließend würde ich dir {empfehlen}, dich frühzeitig zu {bewerben}.`],
+    [`Zu dieser Frage gibt es unterschiedliche Meinungen: Einerseits …, andererseits … <i>(Pflichtjahr · soziale Berufe · Lebensplanung)</i>`, `Zu dieser Frage gibt es unterschiedliche {Meinungen}: Einerseits {entlastet} ein Pflichtjahr die sozialen Berufe, andererseits {greift} es tief in die Lebensplanung junger Menschen {ein}.`],
+    [`Ich persönlich bin der Meinung, dass …, und zwar aus folgendem Grund: … <i>(Vorteile · saubere Luft)</i>`, `Ich persönlich bin der {Meinung}, dass die Vorteile {überwiegen}, und zwar aus folgendem {Grund}: Saubere Luft ist ein Grundbedürfnis.`],
+    [`Ein Grund dafür könnte sein, dass … <i>(Homeoffice · Fahrten)</i>`, `Ein Grund für den Anstieg {könnte} sein, dass das Homeoffice viele Fahrten überflüssig {macht}.`],
+    [`Wenn sich dieser Trend fortsetzt, dürfte … <i>(Anteil · steigen)</i>`, `Wenn sich dieser Trend {fortsetzt}, {dürfte} der Anteil weiter steigen.`],
+    [`Abschließend würde ich dir empfehlen, … <i>(frühzeitig · sich bewerben)</i>`, `Abschließend würde ich dir {empfehlen}, dich frühzeitig zu {bewerben}.`]],
   zsf: [
-    `Der vorliegende Text {thematisiert} den anhaltenden Rückgang des Fleischkonsums in Deutschland.`,
-    `Der Autor {betont}, es {gebe} einen Strukturbruch in der Landwirtschaft (Konjunktiv I!).`,
-    `Umstritten {sei}, ob der Staat den Wandel über Steuern {beschleunigen} solle.`,
-    `Abschließend {plädiert} der Autor {für} gezielte Übergangshilfen.`],
+    [`Der vorliegende Text thematisiert … <i>(Fleischkonsum · Rückgang)</i>`, `Der vorliegende Text {thematisiert} den anhaltenden Rückgang des Fleischkonsums in Deutschland.`],
+    [`Der Autor betont, … <i>(Strukturbruch · Landwirtschaft — Konjunktiv I!)</i>`, `Der Autor {betont}, es {gebe} einen Strukturbruch in der Landwirtschaft.`],
+    [`Umstritten sei, ob … <i>(Staat · Wandel · beschleunigen)</i>`, `Umstritten {sei}, ob der Staat den Wandel über Steuern {beschleunigen} solle.`],
+    [`Abschließend plädiert der Autor für … <i>(Übergangshilfen)</i>`, `Abschließend {plädiert} der Autor {für} gezielte Übergangshilfen.`]],
 };
+const bspHr = `<hr style="border:none; border-top:1px solid var(--rand); margin:8px 0;">`;
 for (const k of Object.keys(BSP))
-  MAT[k] += `<hr style="border:none; border-top:1px solid var(--rand); margin:8px 0;">` +
-    `<b>✏️ Die Redemittel im Einsatz</b> — volle Beispielsätze (B2→C1+), Lücke antippen = Lösung:<br>` +
-    BSP[k].map(s => "· " + lz(s)).join("<br>");
+  MAT[k] += bspHr + `<b>🗣️ Satzbau-Training</b> — aus Redemittel + Stichworten einen <b>ganzen Satz</b> bauen (laut oder schriftlich), dann antippen und vergleichen:` +
+    BSP[k].map(([p, s]) => `<details class="ueb"><summary>${p}</summary>
+    <div class="loes">✅ ${s.replace(/[{}]/g, "")}</div></details>`).join("");
+
+// Die Lücken-Variante derselben Sätze erscheint per Spaced Repetition an einem
+// ANDEREN Tag als eigene 🔁-Aufgabe: Mo Grafik · Mi Schablone (Di trainiert) ·
+// Do Zusammenfassung · Fr Sprechen-Redemittel (Mi trainiert) · Sa Stellungnahme (Do trainiert)
+const BSP_WDH = { 0:["grafik","Grafikbeschreibung"], 2:["schablone","Aufsatz-Schablone"],
+  3:["zsf","Zusammenfassung"], 4:["redemittel","Sprechen-Redemittel"], 5:["sprechen7","Stellungnahme & Hypothese"] };
+const bspLuecken = k => `<b>✏️ Lücken füllen</b> — dieselben Sätze wie im Satzbau-Training, heute als Lückentext.
+  Erst laut lösen, dann antippen (nochmal = wieder zu):<br>` +
+  BSP[k].map(([p, s]) => "· " + lz(s)).join("<br>");
 
 // ── Spaced Repetition: Gelerntes kommt nach 1, 3 und 7 Wochen zurück ────
 // Runde 1 (+1 Wo, Montag) · Runde 2 (+3 Wo, Freitag) · Runde 3 (+7 Wo, Montag)
@@ -753,6 +764,8 @@ function tag(d) {
     [ { z:"60′", t:"Reproduktion", x:sa, m: reproMat ? reproMat + MAT.schablone : (ksMat || MAT.schablone) }, { z:"30′", t:"Reservezeit", x:"in den schwächsten Teil laut Diagnose (Woche 0) stecken" } ],
   ];
   r.tasks = TAGE[wd].concat(wiederholungen(w, wd));
+  if (BSP_WDH[wd]) r.tasks.push({ z:"5′", rev:1, t:`🔁 Redemittel-Lücken: ${BSP_WDH[wd][1]}`,
+    x:"Die Sätze aus dem Satzbau-Training — heute die Lücken aus dem Gedächtnis füllen", m: bspLuecken(BSP_WDH[wd][0]) });
   if (w <= 4 && wd === 2) r.tasks.push({ z:"10′", t:"⌨️ Tipp-Training (deutsches QWERTZ)", x:`<a href="https://www.keybr.com" target="_blank">keybr.com</a> oder <a href="https://www.typing.com" target="_blank">typing.com</a>, Layout Deutsch — Ziel 25 Wörter/Min. (${datei("24")})` });
   r.tasks.push({ z:"10′", t:"✏️ Übungsblock: Grammatik & Wortschatz", x:"4 Aufgaben im Kasten unten — erst selbst lösen, dann Lösung aufklappen. Alle Übungen: " + datei("22") });
   r.uebungen = uebungsblock(w, d);
