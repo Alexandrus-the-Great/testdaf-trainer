@@ -59,8 +59,29 @@
   .lk.auf { color:#2ca02c; border-bottom-color:#2ca02c; }
   .balken { height:8px; border-radius:99px; background:var(--rand); overflow:hidden; margin:8px 0 2px; }
   .balken div { height:100%; background:#2ca02c; transition:width .3s; }
+  .sb { display:flex; gap:8px; margin:6px 0 2px 18px; }
+  .sb button { padding:3px 10px; font-size:.85rem; border-radius:8px; color:var(--grau); }
+  .sb button.ok.an { background:rgba(44,160,44,.18); border-color:#2ca02c; color:#2ca02c; font-weight:700; }
+  .sb button.no.an { background:rgba(214,39,40,.14); border-color:#d62728; color:#d62728; font-weight:700; }
+  .kpi { font-size:1.7rem; font-weight:700; }
+  .kpi span { font-size:1rem; font-weight:400; color:var(--grau); }
+  .wr { display:flex; align-items:center; gap:8px; margin:5px 0; }
+  .wr .wl { flex:none; width:30px; font-size:.85rem; font-weight:600; color:var(--blau); }
+  .wr .balken { flex:1; margin:0; }
+  .wr .wz { flex:none; width:56px; text-align:right; font-size:.8rem; color:var(--grau); }
   a { color:var(--blau); }
   .fuss { color:var(--grau); font-size:.85rem; margin-top:14px; }
+  .korrTa { width:100%; box-sizing:border-box; padding:10px; font:inherit; font-size:.95rem;
+            line-height:1.5; border:1px solid #ccc; border-radius:6px; resize:vertical; }
+  .korrBtnG { padding:10px 14px; font-size:.95rem; border:1px solid var(--blau); border-radius:6px;
+              background:var(--blau); color:#fff; cursor:pointer; }
+  .korrBtnG:active { opacity:.75; }
+  .korrBtnS { background:var(--karte); color:var(--text); border-color:var(--rand); }
+  @media (prefers-color-scheme: dark) {
+    .korrBtnG { color:#14181d; font-weight:600; }
+    .korrBtnS { background:var(--karte); color:var(--text); border-color:var(--rand); font-weight:400; }
+    .korrTa, #korrTyp { background:var(--karte); color:var(--text); border-color:var(--rand); }
+  }
 </style>
 </head>
 <body>
@@ -71,6 +92,8 @@
       <button id="zurueck" title="Vortag">←</button>
       <button id="heuteBtn" class="heute">Heute</button>
       <button id="vor" title="Nächster Tag">→</button>
+      <button id="statBtn" title="Statistik">📊</button>
+      <button id="korrBtn" title="Text korrigieren lassen">✍️</button>
     </div>
   </header>
   <div id="app"></div>
@@ -276,6 +299,18 @@ const UEB = {
 // W1 Konnektoren+Präpositionen · W2 Passiv+Nominalstil · W3 Konjunktiv I+II · W4 Partizip/Relativ/Adjektiv
 const UEB_WOCHE = { 1:[2,6], 2:[3,1], 3:[4,9], 4:[10,11] };  // ab W5: alle Module rotierend
 
+// Selbsteinschätzung je Übungsaufgabe: 1 = gewusst · 0 = daneben · null/fehlt = offen.
+// Eigener Key pro Tag (parallel zu tdk-<datum>) — Grundlage der Trefferquote im Statistik-Tab.
+const uebKey = t => "tdk-ueb-" + t;
+const uebStand = d => { try { return JSON.parse(localStorage.getItem(uebKey(iso(d)))) || []; } catch(e){ return []; } };
+function uebMark(btn, t, i, ok) {
+  let a; try { a = JSON.parse(localStorage.getItem(uebKey(t))) || []; } catch(e){ a = []; }
+  a[i] = a[i] === ok ? null : ok;                       // nochmal antippen = wieder offen
+  localStorage.setItem(uebKey(t), JSON.stringify(a));
+  btn.parentNode.querySelectorAll("button").forEach(b => b.classList.remove("an"));
+  if (a[i] !== null) btn.classList.add("an");
+}
+
 function uebungsblock(w, d) {
   const module_ = UEB_WOCHE[w] || [1,2,3,4,5,6,7,8,9,10,11];
   const listen = module_.map(m => UEB[m].items.map(it => [UEB[m].n, it[0], it[1]]));
@@ -286,8 +321,11 @@ function uebungsblock(w, d) {
   const n = Math.min(4, pool.length);
   const aufgaben = [];
   for (let i = 0; i < n; i++) aufgaben.push(pool[(dayIdx*n + i) % pool.length]);
-  return aufgaben.map(([mod, a, l]) => `<details class="ueb"><summary><span class="mod">${mod}:</span> ${a}</summary>
-    <div class="loes">✅ ${l}</div></details>`).join("");
+  const st = uebStand(d), t = iso(d);
+  return aufgaben.map(([mod, a, l], i) => `<details class="ueb"><summary><span class="mod">${mod}:</span> ${a}</summary>
+    <div class="loes">✅ ${l}</div>
+    <div class="sb"><button class="ok${st[i] === 1 ? " an" : ""}" onclick="uebMark(this,'${t}',${i},1)">✓ gewusst</button
+    ><button class="no${st[i] === 0 ? " an" : ""}" onclick="uebMark(this,'${t}',${i},0)">✗ daneben</button></div></details>`).join("");
 }
 
 // ── Lesetraining: eigene Übungstexte im Stil von Leseverstehen Teil 3 ────
@@ -750,7 +788,7 @@ function tag(d) {
   // Digitales Schreiben: in Phase 3 jeder zweite Dienstag = Zusammenfassung + Stellungnahme (getippt)
   const digitalDi = w >= 13 && w <= 18 && w % 2 === 0;
   const diTask = digitalDi
-    ? { z:"60′", t:"Schreiben digital (wie in der Prüfung)", x:`<b>Aufgabe 1:</b> Zusammenfassung (25′, nächster Übungstext aus ${datei("23")}) + <b>Aufgabe 2:</b> Stellungnahme (30′, Sprechkarte aus ${datei("14")} als Thema). Beides <b>tippen</b>, nicht schreiben!`, m: MAT.zsf }
+    ? { z:"60′", t:"Schreiben digital (wie in der Prüfung)", x:`<b>Aufgabentyp 1:</b> argumentativer Text / Stellungnahme (30′, mind. 200 Wörter, Sprechkarte aus ${datei("14")} als Thema) + <b>Aufgabentyp 2:</b> Zusammenfassung aus Text und Grafik (30′, ca. 100–150 Wörter, nächster Übungstext aus ${datei("23")}). Beides <b>tippen</b>, nicht schreiben! Danach im ✍️-Tab korrigieren lassen.`, m: MAT.zsf }
     : { z:"60′", t:"Schreiben", x:di, m: w <= 1 ? MAT.grafik : MAT.schablone };
   const ksMat = p2 ? "<b>Die 6 Kernsätze der Woche:</b><br>" + KERNSAETZE[w].map((s,i) => `${i+1}. ${s}`).join("<br>") : null;
   const reproMat = reprotrainer(w);   // Samstag: Text hinter Stichworten (W1–4 Aufsatz, W5–12 Kernsätze)
@@ -781,10 +819,243 @@ function tag(d) {
 const key = d => "tdk-" + iso(d);
 const gelesen = d => { try { return JSON.parse(localStorage.getItem(key(d))) || []; } catch(e){ return []; } };
 
+// ── Korrektur: Prompt-Baukasten ─────────────────────────────────────────
+// QUELLE: 26-korrektur-rubrik.md. Wird dort etwas geändert, hier mitziehen.
+// Die Bewertungsfragen sind WÖRTLICHE Zitate von testdaf.de (31.07.2026) —
+// nicht umformulieren, sonst korrigiert die KI nach erfundenen Maßstäben.
+const KORR_TYPEN = {
+  D1: { name: "Digital · Aufgabentyp 1 — argumentativer Text", min: 200, max: 0, zeit: 30,
+        kurz: "argumentieren, keine Grafik",
+        regel: "Mindestens 200 Wörter, 30 Minuten (steht wörtlich in der Demo-Version). ACHTUNG, "
+             + "zwei Spielarten — zuerst das Verb der Aufgabe lesen: (a) „Nehmen Sie Stellung“ / "
+             + "„begründen Sie Ihre Meinung“ → eine klare eigene Position ist Pflicht. "
+             + "(b) „Erläutern und begründen Sie, welche positiven und negativen Aspekte es für X "
+             + "und Y hat“ — so lautet die offizielle Beispielaufgabe — → hier ist KEINE eigene "
+             + "Position verlangt. Eine einseitige These ist dann ein Fehler: Gefordert ist das "
+             + "vollständige Raster (jede genannte Gruppe × jedes genannte Vorzeichen), ausgewogen "
+             + "und begründet.",
+        teile: "Spielart (a) Stellung nehmen: Bezug auf die Quelle · These in einem Satz · "
+             + "Argument = Behauptung PLUS Begründung (kein weil-Satz, der die Behauptung nur "
+             + "wiederholt) · Beleg oder Beispiel · Gegenargument aufgreifen · Gegenargument "
+             + "entkräften · Zugeständnis · Reihenfolge schwach → stark · Fazit mit Vorschlag. || "
+             + "Spielart (b) Aspekte erläutern: das Raster der Aufgabe VOLLSTÄNDIG (bei zwei "
+             + "Gruppen × positiv/negativ sind das VIER Felder — jedes einzeln prüfen) · jedes "
+             + "Feld begründet, nicht nur benannt · Ausgewogenheit im Umfang · ordnende Übergänge "
+             + "zwischen den Feldern · eigene Meinung optional und kurz" },
+  D2: { name: "Digital · Aufgabentyp 2 — Zusammenfassung aus Lesetext und Grafik", min: 100, max: 150, zeit: 30,
+        kurz: "KEINE eigene Meinung",
+        regel: "KEINE eigene Meinung. Nur Inhalte aus Text und Grafik, in EIGENEN Worten — "
+             + "das Abschreiben von Textpassagen ist ausdrücklich verboten. Ca. 100–150 Wörter; "
+             + "ca. 30 Minuten (ABGELEITET: die Demo-Version nennt eine Zeit nur bei Aufgabentyp 1, "
+             + "testdaf.de nennt ca. 60 Minuten für beide Aufgaben zusammen). Die Grafik wird NICHT "
+             + "beschrieben: Es zählt der eine Wert, der die gestellte Frage beantwortet. Alle Werte "
+             + "aufzuzählen ist hier ein Fehler und kostet den Platz für den Lesetext. Die gestellte "
+             + "Frage ist zugleich die Gliederung: Ihre Hälften einzeln der richtigen Quelle zuordnen "
+             + "(im offiziellen Beispiel: Ursachen aus dem Lesetext, Folgen aus der Grafik).",
+        teile: "Einleitungssatz mit Thema und Quelle · beide Hälften der Fragestellung, jede aus "
+             + "ihrer Quelle · EIN passender Wert aus der Grafik (nicht alle) · Verbindung beider "
+             + "Quellen · eigene Worte statt übernommener Wendungen, auch Fachwörter erklärt "
+             + "(„Monokulturen, d. h. …“) · KEINE Meinung" },
+  P:  { name: "Papierbasiert — ein zusammenhängender Text", min: 350, max: 450, zeit: 60,
+        kurz: "Schaubild(er) + Meinung + Heimatland",
+        regel: "Die Datendarstellung wechselt von Prüfung zu Prüfung: in den fünf offiziellen "
+             + "Musterprüfungen einmal eine Tabelle, dreimal EIN Schaubild, einmal zwei Grafiken; die "
+             + "Modelltests 01/02 haben zwei. Nicht jede hat eine Zeitachse — ohne Zeitachse wird "
+             + "verglichen (Altersgruppen, Geschlecht), nicht gestiegen/gefallen gesagt. In 7 von 7 "
+             + "offiziellen Aufgaben verlangt: beschreiben UND vergleichen, die Meinung begründen, die "
+             + "Situation im Heimatland. In 4 von 7 zusätzlich: die beiden gegebenen Meinungen mit "
+             + "EIGENEN Worten wiedergeben und zu BEIDEN Stellung nehmen. Amtliche Zeitaufteilung: "
+             + "Beschreibung höchstens 20 Minuten, Argumentation höchstens 40 Minuten. "
+             + "Ca. 350–450 Wörter, 60 Minuten.",
+        teile: "Einleitung mit Thema und Bezug · beschreiben UND vergleichen · bei zwei Schaubildern "
+             + "der Bezug zwischen beiden · gegebene Meinungen in eigenen Worten · Stellung zu BEIDEN "
+             + "Aussagen · eigene Meinung begründet · Situation im Heimatland · Fazit" },
+};
+
+// §3b der Rubrik: die Satzbau-Signale, an denen sich TDN 5 von TDN 4 unterscheidet.
+// Warnung im Prompt nicht streichen — acht Signale in einem Text klingen gestelzt,
+// und Verständlichkeit steht amtlich über Kunstfertigkeit.
+const KORR_SIGNALE = [
+  "Konjunktiv I bei Redewiedergabe (sie sei, er habe, es gebe)",
+  "Passiv oder Passiversatz (wird untersucht · lässt sich finden · ist zu beachten)",
+  "Relativsatz, gern mit Präposition (…, bei dem … · …, deren …)",
+  "Konzessiv: obwohl · zwar … jedoch · trotz + Genitiv",
+  "Nominalisierung mit Genitiv (zur Vertiefung des Stoffes)",
+  "Partizipialattribut (die von Dunlosky untersuchten Methoden)",
+  "Finalsatz oder erweiterter Infinitiv (um … zu · damit)",
+  "Konnektoren jenseits von und/aber/weil: dadurch · folglich · allerdings · hingegen",
+];
+
+// Wörtliches Zitat testdaf.de „Auswertung des digitalen TestDaF", abgerufen 31.07.2026
+const KORR_ZITAT =
+  "Bezieht sich Ihr Text auf das Thema der Aufgabe? Werden alle Punkte der Aufgabenstellung "
++ "ausreichend berücksichtigt? Werden die in der Aufgabenstellung geforderten Schreibhandlungen "
++ "erfolgreich umgesetzt (z. B. einen argumentativen Text schreiben oder Informationen aus einem "
++ "Text und einer Grafik zusammenfassen)? Sind die Informationen – sofern gefordert – aus den "
++ "Quellen in Bezug auf die Fragestellung korrekt und mit eigenen Worten zusammengefasst? Haben "
++ "Sie sich angemessen und präzise ausgedrückt? Variieren Sie grammatikalische Strukturen? Ist "
++ "Ihr Wortschatz abwechslungsreich? Verwenden Sie angemessene Redemittel? Ist Ihre Äußerung "
++ "trotz einiger Fehler noch verständlich?";
+
+const KORR_FELDER = [
+  "Thema getroffen — geht es um die gestellte Frage?",
+  "Alle Punkte der Aufgabenstellung behandelt?",
+  "Schreibhandlung erfüllt — argumentiert bzw. zusammengefasst, wie verlangt?",
+  "Sprachliche Mittel — Satzbauvielfalt, Wortschatzbreite, passende Redemittel, Präzision.",
+  "Verständlichkeit trotz Fehlern — stört der Fehler den Sinn oder nicht?",
+];
+
+const KORR_AUSGABE = [
+  "EINORDNUNG — erkannter Aufgabentyp, gezählte Wortzahl, Umfang in Ordnung oder nicht.",
+  "DIE FÜNF PRÜFFELDER — je Feld: was trägt (mit Zitat), was fehlt. Zu JEDER Lücke ein bis drei "
+  + "fertige, einsetzbare Sätze aus dem Stoff DIESES Textes — werden in einem Feld drei Dinge "
+  + "bemängelt, gehören dorthin drei Beispielblöcke. Feld 2: die Aufgabenstellung in ihre "
+  + "Einzelaufträge zerlegen und abhaken (erfüllt / halb / fehlt), auch die mitgemeinten "
+  + "(„Was meint ihr DAZU?“ verlangt eine Reaktion auf das Dazu). Feld 3: die Bauteile der "
+  + "Schreibhandlung einzeln abhaken, jedes fehlende mit fertigem Satz. Feld 4: die Signalliste "
+  + "durchgehen — vorhanden (Zitat) oder nicht — und für die 2–3 wichtigsten Lücken einen EIGENEN "
+  + "Satz des Textes umbauen: Original links, Umbau rechts.",
+  "VERSTÄNDLICHKEIT ZUERST — nenne zuerst die Stellen, die den Sinn stören und zweimal gelesen "
+  + "werden müssen. Das TestDaF-Institut sagt ausdrücklich, Verständlichkeit sei WICHTIGER als "
+  + "Korrektheit. Ein flüssiger Text mit vielen harmlosen Fehlern steht besser da als ein "
+  + "fehlerarmer, den man entziffern muss. Gewichte entsprechend.",
+  "FEHLERTABELLE — jede Stelle einzeln: falsch → richtig → Regel in einem Satz → Fehlerklasse "
+  + "→ stört den Sinn? ja/nein.",
+  "MUSTER — die 2–3 häufigsten Fehlerklassen mit der Regel dahinter (wichtiger als Einzelfehler). "
+  + "Zu JEDER dieser Klassen drei kurze Übungsbeispiele: neue Sätze (nicht die aus dem Text) "
+  + "zum Selbstlösen, Lösungen darunter. Eine gelesene Regel kann man noch nicht.",
+  "ARGUMENTATION — begründet oder nur behauptet? Beispiel da? Zugeständnis da? Reihenfolge "
+  + "schwach → stark? Jede Lücke mit ein bis drei ausformulierten Sätzen.",
+  "WORTSCHATZ-UPGRADE — 5 Stellen mit präziserem Wort, jeweils ganzer Satz vorher/nachher. "
+  + "Zu JEDEM Upgrade drei Übungssätze mit Lücke, in die das neue Wort in der richtigen Form "
+  + "einzusetzen ist (neue Sätze, nicht die aus dem Text), Lösungen gesammelt darunter. Ein Wort, "
+  + "das man in einem fremden Satz nicht anwenden kann, ist noch nicht aktiver Wortschatz.",
+  "EINSCHÄTZUNG — Richtung TDN 3/4/5 pro Prüffeld, ausdrücklich als SCHÄTZUNG beschriftet.",
+  "NÄCHSTE SCHRITTE — die drei wichtigsten, konkret und priorisiert.",
+  "ANKI — 3–5 Karten im Format Vorderseite;Rückseite zu den häufigsten Fehlerklassen.",
+  "MUSTERFASSUNG — ganz zum Schluss der verbesserte Text, mit dem sichtbaren Hinweis darüber: "
+  + "erst selbst überarbeiten, dann vergleichen. Sie behält MEINE These und MEINE Argumente — "
+  + "derselbe Text besser, kein anderer Text. Sie berichtigt alle Fehler der Tabelle, ergänzt die "
+  + "fehlenden Aufgabenpunkte, verbessert die Argumentation (Gegenargument, Entkräftung, Beispiel, "
+  + "Reihenfolge schwach → stark), baut 2–3 Signale aus der Liste ein und erreicht die geforderte "
+  + "Wortzahl (nachzählen und angeben). Alles Neue FETT markieren. Danach eine kurze Liste „Was "
+  + "daran anders ist“ (4–6 Punkte, jeder mit Verweis auf den Abschnitt, der ihn verlangt hat) "
+  + "und eine letzte Aufgabe: eine Stelle der Musterfassung, die ich selbst noch einmal anders "
+  + "formulieren soll.",
+];
+
+// Anzeigenamen für die Liste im Tab. Bewusst ausgeschrieben statt automatisch aus
+// KORR_AUSGABE umgeformt — deutsche Substantive überleben kein toLowerCase().
+const KORR_KURZ = ["Einordnung", "Die fünf Prüffelder + Beispielsätze", "Verständlichkeit zuerst",
+  "Fehlertabelle", "Muster + je 3 Übungsbeispiele", "Argumentation",
+  "Wortschatz-Upgrade + je 3 Übungen", "Einschätzung", "Nächste Schritte", "Anki-Karten",
+  "Musterfassung (zuletzt lesen)"];
+
+const KORR_KLASSEN = "Verbstellung · Kasus · Adjektivendung · Präposition · Genus · Wortstellung · "
+  + "Konnektor · Wortwahl · Zeichensetzung · Register · Rechtschreibung";
+
+const woerter = s => (String(s).trim().match(/[^\s]+/g) || []).length;
+
+function korrPrompt(typ, aufgabe, text) {
+  const T = KORR_TYPEN[typ] || KORR_TYPEN.D1;
+  const n = woerter(text);
+  const soll = T.max ? T.min + "–" + T.max + " Wörter" : "mindestens " + T.min + " Wörter";
+  return [
+    "Du bist erfahrene*r TestDaF-Bewerter*in für den Prüfungsteil Schreiben.",
+    "Korrigiere den Text unten. Die Korrektur selbst schreibt ihn NICHT für mich um — ich will",
+    "selbst überarbeiten. Erst als LETZTER Abschnitt kommt eine Musterfassung, mit dem Hinweis",
+    "darüber, dass ich sie erst nach meiner eigenen Überarbeitung lesen soll.",
+    "",
+    "── AUFGABENFORM ──",
+    T.name,
+    "Vorgabe: " + soll + ", " + T.zeit + " Minuten.",
+    T.regel,
+    "Bauteile dieser Schreibhandlung — einzeln abhaken (erfüllt / halb / fehlt):",
+    T.teile,
+    "Nennt ein Auftrag ZWEI Dimensionen (z. B. positive und negative Aspekte für Arbeitskräfte",
+    "und Unternehmen), zeichne ein Raster statt einer Zeile und prüfe jedes Feld einzeln — die",
+    "offiziellen Lösungshinweise sind genau so gebaut. Ein Text mit zwei von vier Feldern liest",
+    "sich vollständig und ist es nicht.",
+    "Gezählte Wortzahl meines Textes: " + n + ".",
+    "",
+    "── WONACH BEWERTET WIRD ──",
+    "Wörtliches Zitat der offiziellen Bewertungsfragen (testdaf.de, abgerufen 31.07.2026):",
+    "„" + KORR_ZITAT + "“",
+    "Die Beurteilung wird in Punkte auf einer Skala von 0–20 übertragen.",
+    "",
+    "Daraus die fünf Prüffelder:",
+    KORR_FELDER.map((f, i) => (i + 1) + ". " + f).join("\n"),
+    "",
+    "── WICHTIG: WAS DU NICHT WEISST ──",
+    "Das TestDaF-Institut veröffentlicht KEINE detaillierten Banddeskriptoren für Schreiben.",
+    "Es gibt keine amtliche Tabelle „so viele Fehler = TDN 4\". Jede TDN-Angabe von dir ist",
+    "eine begründete Schätzung und MUSS als Schätzung beschriftet sein. Kein amtlicher Ton,",
+    "keine erfundene Punktzahl. Sag lieber „Kriterium 3 ist schwach, weil …\" als „TDN 4\".",
+    "",
+    "── DREI REGELN ÜBER ALLEM ──",
+    "A) Sobald du sagst, etwas FEHLE (ein Gegenargument, ein Zugeständnis, ein Beispiel, ein",
+    "Aufgabenpunkt), schreibe den fertigen Satz daneben — formuliert und direkt einsetzbar.",
+    "„Kein Zugeständnis\" ist eine Diagnose; „Allerdings sollte man einräumen, dass …\" ist Hilfe.",
+    "Eine Lücke ohne Musterformulierung ist wertlos.",
+    "A+) Und zwar EIN BIS DREI Sätze pro Lücke, gebaut aus dem Inhalt DIESES Textes und der",
+    "Aufgabenstellung — nicht aus Allgemeinplätzen. Einer sieht aus wie die einzige Lösung, drei",
+    "zeigen eine Auswahl. „Man könnte ein Beispiel ergänzen\" ist kein Beispiel.",
+    "A++) Präsentiere jeden dieser Sätze als AUFGABE, nicht als Vorlage. Offen stehen nur:",
+    "· Stichwörter (Inhaltswörter in Grundform, mit · getrennt)",
+    "· das GERÜST — derselbe Satz mit ausgelassenen Stellen: „Zwar wird …, die richtigen … seien",
+    "  schwer zu ….\" Funktionswörter bleiben stehen, Inhaltswörter fallen weg. Eine BESCHREIBUNG",
+    "  der Struktur ist kein Gerüst — das Muster muss sichtbar sein.",
+    "· in Klammern der Name der Struktur (Passiv · Konjunktiv I · Zwar … jedoch)",
+    "Die Musterlösung kommt DARUNTER in einen zugeklappten <details>-Block: erst bauen, dann",
+    "aufdecken. Ein gelesener Mustersatz fühlt sich an wie Können und ist keines.",
+    "A+++) Verweise auf Stellen meines Textes IMMER mit Zitat, nie mit einer Satznummer.",
+    "Nicht „Satz 4\", sondern kursiv in Klammern („Meiner Meinung nach ist Gruppenarbeit …\"),",
+    "bei Bedarf mit … gekürzt. Eine Nummer zwingt mich zum Nachzählen, das Zitat zeigt die Stelle.",
+    "B) Sinnstörende Stellen ERKLÄRST du, du etikettierst sie nicht. Fachwörter wie „falsches",
+    "Anschlusswort\" helfen niemandem. Nenne: was gemeint war · was der Leser stattdessen",
+    "erwartet · warum die Erwartung platzt · den berichtigten Satz. Mit kurzen Gegenbeispielen.",
+    "",
+    "── SIGNALE FÜR SPRACHLICHE MITTEL (Prüffeld 4) ──",
+    "Geh diese Liste durch: vorhanden (mit Zitat) oder nicht. Für die 2–3 wichtigsten Lücken",
+    "baust du einen MEINER Sätze um — Original links, Umbau rechts.",
+    KORR_SIGNALE.map(s => "· " + s).join("\n"),
+    "Aber: Verlange NICHT alle acht. Ein Text mit allen Signalen klingt gestelzt, und",
+    "Verständlichkeit steht amtlich höher als Kunstfertigkeit. Zwei bis drei sind das Ziel.",
+    "",
+    "── AUSGABE, GENAU IN DIESER REIHENFOLGE ──",
+    KORR_AUSGABE.map((a, i) => (i + 1) + ". " + a).join("\n"),
+    "",
+    "Fehlerklassen für die Tabelle: " + KORR_KLASSEN + ".",
+    "Antworte auf Deutsch. Lob nur für Stellen, die wirklich tragen — mit Zitat.",
+    "Nicht schönreden: verfehlt der Text ein Kriterium, schreib das so hin.",
+    "",
+    "── AUFGABENSTELLUNG ──",
+    (aufgabe || "").trim() || "(nicht angegeben — frag genau einmal nach, statt zu raten)",
+    "",
+    "── MEIN TEXT ──",
+    (text || "").trim(),
+  ].join("\n");
+}
+
 // ── Rendering ───────────────────────────────────────────────────────────
 let aktuell = new Date(); aktuell.setHours(0,0,0,0);
+let ansicht = "tag";                                   // "tag" | "stat" | "korr"
 
 function render() {
+  const stat = ansicht === "stat", korr = ansicht === "korr";
+  for (const id of ["zurueck", "heuteBtn", "vor"]) document.getElementById(id).style.display = (stat || korr) ? "none" : "";
+  const b = document.getElementById("statBtn");
+  b.style.display = korr ? "none" : "";
+  b.textContent = stat ? "← Tagesplan" : "📊";
+  b.title = stat ? "Zurück zum Tagesplan" : "Statistik";
+  const k = document.getElementById("korrBtn");
+  k.style.display = stat ? "none" : "";
+  k.textContent = korr ? "← Tagesplan" : "✍️";
+  k.title = korr ? "Zurück zum Tagesplan" : "Text korrigieren lassen";
+  if (stat) renderStat(); else if (korr) renderKorr(); else renderTag();
+}
+
+function renderTag() {
   const d = aktuell, info = tag(d), app = document.getElementById("app");
   const fmt = new Intl.DateTimeFormat("de-DE", { weekday:"long", day:"numeric", month:"long", year:"numeric" });
   const fmtK = new Intl.DateTimeFormat("de-DE", { day:"numeric", month:"short", year:"numeric" });
@@ -896,6 +1167,237 @@ function render() {
   });
 }
 
+// ── Statistik ───────────────────────────────────────────────────────────
+// Ein Durchgang über alle Lerntage seit dem Start: Wochenverlauf, Serie, Summen.
+// Sonntag ist frei (kein Lerntag) und unterbricht die Serie nicht; der laufende Tag
+// bricht sie ebenfalls nicht, solange er noch offen ist.
+function statistik(heute) {
+  const wochen = [];
+  let lauf = 0, best = 0, tageVoll = 0, tageAlle = 0, haken = 0;
+  const maxW = Math.min(27, wochennr(heute));
+  for (let w = 0; w <= maxW; w++) {
+    let done = 0, alle = 0;
+    for (let wd = 0; wd < 6; wd++) {
+      const d = plusTage(START, w*7 + wd), info = tag(d);
+      if (!info.tasks.length) continue;
+      const h = Math.min(gelesen(d).filter(Boolean).length, info.tasks.length);
+      done += h; alle += info.tasks.length;
+      if (d > heute) continue;                          // Zukunft: zählt nur als Soll im Wochenverlauf
+      tageAlle++; haken += h;
+      if (h >= info.tasks.length) { tageVoll++; lauf++; if (lauf > best) best = lauf; }
+      else if (iso(d) !== iso(heute)) lauf = 0;
+    }
+    wochen.push({ w, done, alle });
+  }
+  return { wochen, serie: lauf, best, tageVoll, tageAlle, haken };
+}
+
+// Trefferquote über alle Tage (Keys tdk-ueb-<datum>)
+function uebQuote() {
+  let r = 0, f = 0;
+  for (let i = 0; i < localStorage.length; i++) {
+    const k = localStorage.key(i);
+    if (!k || k.indexOf("tdk-ueb-") !== 0) continue;
+    let a; try { a = JSON.parse(localStorage.getItem(k)) || []; } catch(e){ continue; }
+    for (const v of a) { if (v === 1) r++; else if (v === 0) f++; }
+  }
+  return { r, f, n: r + f };
+}
+
+function renderStat() {
+  const app = document.getElementById("app");
+  const heute = new Date(); heute.setHours(0,0,0,0);
+  if (!gestartet) {
+    app.innerHTML = `<div class="datum">📊 Statistik</div>
+      <div class="card"><h3>Noch keine Daten</h3>Die Statistik füllt sich, sobald du den Kurs mit der
+      <b>▶ START</b>-Checkbox begonnen und die ersten Haken gesetzt hast.</div>`;
+    return;
+  }
+  const s = statistik(heute), q = uebQuote();
+  const quote = q.n ? Math.round(100*q.r/q.n) : 0;
+  const proz = s.tageAlle ? Math.round(100*s.tageVoll/s.tageAlle) : 0;
+  const wochenHtml = s.wochen.map(({ w, done, alle }) => {
+    const p = alle ? Math.round(100*done/alle) : 0;
+    return `<div class="wr"><span class="wl">W${w}</span>
+      <div class="balken"><div style="width:${p}%"></div></div>
+      <span class="wz">${done}/${alle}</span></div>`;
+  }).join("");
+
+  app.innerHTML = `
+    <div class="datum">📊 Statistik</div>
+    <div class="meta">Aus deinen Haken auf diesem Gerät gerechnet · Lerntage sind Mo–Sa</div>
+    <div class="card"><h3>🔥 Serie</h3>
+      <div class="kpi">${s.serie} <span>Lerntage in Folge</span></div>
+      <div class="fuss" style="margin-top:6px;">Längste Serie bisher: <b>${s.best}</b> · Sonntag ist frei und unterbricht
+        die Serie nicht · der heutige Tag zählt, sobald alle Haken gesetzt sind.</div></div>
+    <div class="card"><h3>✅ Erledigte Lerntage</h3>
+      <div class="kpi">${s.tageVoll} <span>von ${s.tageAlle} (${proz} %)</span></div>
+      <div class="fuss" style="margin-top:6px;">Insgesamt ${s.haken} einzelne Aufgaben abgehakt.</div></div>
+    <div class="card"><h3>✏️ Übungsblock-Trefferquote</h3>
+      ${q.n ? `<div class="kpi">${quote} <span>% richtig (${q.r} von ${q.n})</span></div>
+        <div class="balken"><div style="width:${quote}%"></div></div>`
+      : `<div>Noch nichts eingeschätzt.</div>`}
+      <div class="fuss" style="margin-top:6px;">Im Übungsblock nach dem Aufklappen <b>✓ gewusst</b> oder
+        <b>✗ daneben</b> antippen.${q.f ? ` <b>${q.f}</b> Aufgaben saßen noch nicht — die gehören als Karte
+        ins Anki-Deck „Meine Fehler“.` : ""}</div></div>
+    <div class="card"><h3>Wochenverlauf</h3>
+      ${wochenHtml || `<div>Noch keine Woche begonnen.</div>`}
+      <div class="fuss" style="margin-top:8px;">Abgehakte Aufgaben je Woche (Mo–Sa) — die laufende Woche
+        zählt bereits mit ihrem vollen Soll.</div></div>`;
+}
+
+// ── Korrektur-Ansicht ───────────────────────────────────────────────────
+const KORR_KEY = "tdk-korr";
+function korrLaden() {
+  try { return JSON.parse(localStorage.getItem(KORR_KEY)) || {}; } catch(e) { return {}; }
+}
+function korrSichern() {
+  const d = { typ: korrWert("korrTyp"), aufgabe: korrWert("korrAufgabe"), text: korrWert("korrText") };
+  try { localStorage.setItem(KORR_KEY, JSON.stringify(d)); } catch(e) {}
+  return d;
+}
+const korrWert = id => { const el = document.getElementById(id); return el ? el.value : ""; };
+
+function korrZaehler() {
+  const d = korrSichern(), T = KORR_TYPEN[d.typ] || KORR_TYPEN.D1, n = woerter(d.text);
+  const el = document.getElementById("korrZahl");
+  if (!el) return;
+  const zuKurz = n < T.min, zuLang = T.max && n > T.max;
+  const soll = T.max ? T.min + "–" + T.max : "mind. " + T.min;
+  el.innerHTML = "<b>" + n + "</b> Wörter · Vorgabe " + soll + " · " + T.zeit + " Min."
+    + (n === 0 ? "" : zuKurz ? " <b style=\"color:#d62728\">→ zu kurz, das kostet Punkte vor dem ersten Satz</b>"
+      : zuLang ? " <b style=\"color:#d62728\">→ zu lang für diese Aufgabe</b>"
+      : " <b style=\"color:#2ca02c\">→ Umfang passt</b>");
+}
+
+function korrMeldung(txt, ok) {
+  const el = document.getElementById("korrMeld");
+  if (!el) return;
+  el.innerHTML = "<b style=\"color:" + (ok ? "#2ca02c" : "#d62728") + "\">" + txt + "</b>";
+  setTimeout(() => { if (el) el.textContent = ""; }, 6000);
+}
+
+function korrBauen() {
+  const d = korrSichern();
+  if (!woerter(d.text)) { korrMeldung("Erst den eigenen Text einfügen.", false); return null; }
+  return korrPrompt(d.typ, d.aufgabe, d.text);
+}
+
+function korrKopieren() {
+  const p = korrBauen(); if (!p) return;
+  const fertig = () => korrMeldung("✓ Prompt kopiert — jetzt in Claude einfügen.", true);
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(p).then(fertig, () => korrErsatzKopie(p, fertig));
+  } else korrErsatzKopie(p, fertig);
+}
+function korrErsatzKopie(p, fertig) {
+  const ta = document.createElement("textarea");
+  ta.value = p; ta.style.position = "fixed"; ta.style.opacity = "0";
+  document.body.appendChild(ta); ta.select();
+  let ok = false; try { ok = document.execCommand("copy"); } catch(e) {}
+  document.body.removeChild(ta);
+  ok ? fertig() : korrMeldung("Kopieren hat nicht geklappt — bitte „Datei speichern“ benutzen.", false);
+}
+
+function korrDatei() {
+  const p = korrBauen(); if (!p) return;
+  const d = korrLaden(), heute = iso(new Date());
+  const blob = new Blob([p], { type: "text/plain;charset=utf-8" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "korrektur-prompt-" + (d.typ || "D1") + "-" + heute + ".txt";
+  document.body.appendChild(a); a.click();
+  setTimeout(() => { URL.revokeObjectURL(a.href); document.body.removeChild(a); }, 0);
+  korrMeldung("✓ Datei gespeichert — gehört in hausaufgaben/" + heute + "/.", true);
+}
+
+function korrTextDatei() {
+  const d = korrSichern();
+  if (!woerter(d.text)) { korrMeldung("Noch kein Text da.", false); return; }
+  const heute = iso(new Date());
+  const inhalt = "Aufgabentyp: " + (KORR_TYPEN[d.typ] || KORR_TYPEN.D1).name + "\n"
+    + "Datum: " + heute + " · Wörter: " + woerter(d.text) + "\n\n"
+    + "── AUFGABENSTELLUNG ──\n" + ((d.aufgabe || "").trim() || "(nicht angegeben)")
+    + "\n\n── TEXT ──\n" + d.text.trim() + "\n";
+  const blob = new Blob([inhalt], { type: "text/plain;charset=utf-8" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "Kirills Schreiben " + heute + ".txt";
+  document.body.appendChild(a); a.click();
+  setTimeout(() => { URL.revokeObjectURL(a.href); document.body.removeChild(a); }, 0);
+  korrMeldung("✓ Text gespeichert — gehört in hausaufgaben/" + heute + "/.", true);
+}
+
+function korrLeeren() {
+  if (!confirm("Aufgabenstellung und Text wirklich löschen?")) return;
+  for (const id of ["korrAufgabe", "korrText"]) { const el = document.getElementById(id); if (el) el.value = ""; }
+  korrZaehler();
+}
+
+function renderKorr() {
+  const app = document.getElementById("app"), d = korrLaden();
+  const opt = Object.keys(KORR_TYPEN).map(k =>
+    `<option value="${k}"${d.typ === k ? " selected" : ""}>${KORR_TYPEN[k].name} — ${KORR_TYPEN[k].kurz}</option>`).join("");
+  app.innerHTML = `
+    <div class="datum">✍️ Text korrigieren lassen</div>
+    <div class="meta">Baut den vollständigen Prüfer-Prompt · Maßstab: Datei 26 · Eingaben bleiben auf diesem Gerät</div>
+
+    <div class="card"><h3>1 · Aufgabenform</h3>
+      <select id="korrTyp" style="width:100%;padding:10px;font-size:.95rem;">${opt}</select>
+      <div class="fuss" id="korrRegel" style="margin-top:8px;"></div></div>
+
+    <div class="card"><h3>2 · Aufgabenstellung</h3>
+      <textarea id="korrAufgabe" class="korrTa" rows="4"
+        placeholder="Die Aufgabe abtippen oder einfügen — ohne sie kann die Korrektur „Behandlung der Aufgabe“ nicht prüfen, und das ist das schwerste Kriterium."></textarea></div>
+
+    <div class="card"><h3>3 · Dein Text</h3>
+      <textarea id="korrText" class="korrTa" rows="14" placeholder="Hier den eigenen Aufsatz einfügen …"></textarea>
+      <div class="fuss" id="korrZahl" style="margin-top:8px;"></div></div>
+
+    <div class="card"><h3>4 · An Claude geben</h3>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;">
+        <button id="korrCopy" class="korrBtnG">📋 Prompt kopieren</button>
+        <button id="korrDl" class="korrBtnG">💾 Prompt als Datei</button>
+        <button id="korrTxt" class="korrBtnG">📝 Nur meinen Text speichern</button>
+        <button id="korrClr" class="korrBtnG korrBtnS">🗑 Leeren</button>
+      </div>
+      <div class="fuss" id="korrMeld" style="margin-top:8px;min-height:1.2em;"></div>
+      <div class="fuss" style="margin-top:6px;">
+        <b>So geht es:</b> kopieren → in Claude einfügen → Enter. Claude bekommt damit die
+        offiziellen Bewertungsfragen, die Vorgaben deiner Aufgabenform und deinen Text.
+        Wer Claude Code hat, sagt stattdessen einfach <b>„korrigiere meinen Aufsatz“</b> —
+        die Skill <code>testdaf-korrektur</code> macht dasselbe und legt die Antwort ab.
+      </div></div>
+
+    <div class="card"><h3>Was du zurückbekommst</h3>
+      <ol style="margin:0;padding-left:20px;line-height:1.7;">
+        ${KORR_KURZ.map(a => "<li>" + a + "</li>").join("")}
+      </ol>
+      <div class="fuss" style="margin-top:8px;">Der Text wird <b>nicht</b> neu geschrieben — überarbeiten
+        musst du selbst, sonst übst du das Abschreiben statt das Schreiben.</div></div>
+
+    <div class="card" style="border-color:#d62728;"><h3>Ehrlich bleiben</h3>
+      <div class="fuss">Das TestDaF-Institut veröffentlicht <b>keine</b> genauen Banddeskriptoren
+        fürs Schreiben. Jede TDN-Zahl, die eine KI nennt, ist eine <b>Schätzung</b> — nützlich als
+        Richtung, kein Ersatz für einen echten bewerteten Modelltest. Die Bewertungs<i>fragen</i>
+        im Prompt sind dagegen wörtlich von testdaf.de (Stand 31.07.2026).</div></div>`;
+
+  const t = document.getElementById("korrTyp");
+  if (d.aufgabe) document.getElementById("korrAufgabe").value = d.aufgabe;
+  if (d.text) document.getElementById("korrText").value = d.text;
+  const regel = () => { document.getElementById("korrRegel").innerHTML = (KORR_TYPEN[t.value] || KORR_TYPEN.D1).regel; };
+  t.onchange = () => { regel(); korrZaehler(); };
+  document.getElementById("korrAufgabe").oninput = korrSichern;
+  document.getElementById("korrText").oninput = korrZaehler;
+  document.getElementById("korrCopy").onclick = korrKopieren;
+  document.getElementById("korrDl").onclick = korrDatei;
+  document.getElementById("korrTxt").onclick = korrTextDatei;
+  document.getElementById("korrClr").onclick = korrLeeren;
+  regel(); korrZaehler();
+}
+
+document.getElementById("korrBtn").onclick = () => { ansicht = ansicht === "korr" ? "tag" : "korr"; render(); };
+document.getElementById("statBtn").onclick = () => { ansicht = ansicht === "stat" ? "tag" : "stat"; render(); };
 document.getElementById("zurueck").onclick = () => { aktuell.setDate(aktuell.getDate()-1); render(); };
 document.getElementById("vor").onclick     = () => { aktuell.setDate(aktuell.getDate()+1); render(); };
 document.getElementById("heuteBtn").onclick = () => { aktuell = new Date(); aktuell.setHours(0,0,0,0); render(); };

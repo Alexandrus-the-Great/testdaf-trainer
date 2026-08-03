@@ -12,8 +12,17 @@ Live: https://alexandrus-the-great.github.io/testdaf-trainer/
   (`REPRO`/`KERN_STICHWORT`, `reprotrainer()` — samstags: Sätze hinter Stichworten, nur in der App),
   Lückentexte (`LUECKEN`, `lueckentext()` — montags, `{Wort}` = Lücke; Abschnitt in Datei 22 parallel pflegen!),
   Redemittel-Beispielsätze mit Lücken (`BSP` + `lz()` — werden bei Skript-Start an `MAT.*` angehängt),
-  Material-Spickzettel (`MAT`, `KERNSAETZE`). Fortschritt in `localStorage` (`tdk-<datum>`, `tdk-start`, `tdk-ende`).
-- **`01…25-*.md`** — die Lernmaterialien (Deutsch). `README.md` erklärt jede Datei.
+  Material-Spickzettel (`MAT`, `KERNSAETZE`), **Korrektur-Tab** (`KORR_TYPEN`/`KORR_ZITAT`/`korrPrompt()`,
+  `renderKorr()` — baut den Prüfer-Prompt; Entwurf unter `tdk-korr`).
+  Fortschritt in `localStorage` (`tdk-<datum>`, `tdk-start`, `tdk-ende`, `tdk-ueb-<datum>`, `tdk-korr`).
+- **`skills/testdaf-korrektur/`** — Projekt-Skill: korrigiert einen Übungstext nach Datei 26.
+  Bewusst NICHT global (`~/.claude/skills/`) — sie trägt eine Methode und gehört diesem Projekt.
+- **`hausaufgaben/<datum>/`** — Kirills Texte, Aufgaben-Screenshots, `korrektur.md`. **Bleibt lokal**:
+  enthält die urheberrechtlich geschützten g.a.s.t.-Beispielaufgaben. `build_site.py` kopiert eine
+  feste Liste und fasst diesen Ordner nicht an — so lassen.
+- **`01…26-*.md`** — die Lernmaterialien (Deutsch). `README.md` erklärt jede Datei.
+  **Datei 26 ist die Quelle der Wahrheit für jede KI-Korrektur** — App-Tab und Skill bauen ihren
+  Prompt daraus. Wird sie geändert, `KORR_*` in `heute.html` mitziehen (`audit.js` prüft das).
   Datei 25 wurde aus `LESEN` generiert (Generator: Session-Scratchpad `gen25.js`-Muster) — bei
   Änderungen an den Lesetexten beide Stellen synchron halten.
 - **`grafiken/`** — 19 Übungsdiagramme (SVG) + `make_grafiken.py` (matplotlib, **SVG-Backend nutzen** —
@@ -37,6 +46,15 @@ Die Skripte enthalten absolute Windows-Pfade (`C:\Users\alexa\…`) — beim Klo
 Rechner zuerst die `ROOT`-Konstanten anpassen.
 
 ## Stolperfallen (alle schon einmal passiert)
+
+- **Prüfungsformat NIE aus dem Gedächtnis schreiben.** Am 31.07.2026 stand an vier Stellen im
+  Repo, die digitale Zusammenfassung sei „Aufgabe 1" mit 25 Minuten. Richtig ist: Aufgabentyp 1 =
+  argumentativer Text (mind. 200 W.), Aufgabentyp 2 = Zusammenfassung aus Lesetext **und Grafik**
+  (100–150 W.), **je 30 Minuten**. Quelle ist die Demo-Version in `hausaufgaben/`, nicht die
+  Erinnerung. Ein falsches Format trainiert monatelang die falsche Aufgabe.
+- **Es gibt keine amtlichen Banddeskriptoren fürs Schreiben.** Das Institut veröffentlicht
+  Bewertungs*fragen* und die 0–20-Skala, mehr nicht. Jede TDN-Zahl in einer Korrektur ist eine
+  Schätzung und muss so beschriftet sein — sonst klingt Erfundenes amtlich.
 
 - **Deutsche Anführungszeichen in JS:** in `"…"`-Strings niemals `„Wort"` mit ASCII-Schlusszeichen —
   das beendet den String. In doppelten Anführungszeichen `„…“` (U+201E/U+201C) verwenden; in
